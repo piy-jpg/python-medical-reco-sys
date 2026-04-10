@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedRecSys | Predict</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link active" href="/predict">Predict</a>
+        <a class="nav-link" href="/results">Results</a>
+        <a class="nav-link" href="/developer">Developer</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-shell">
+    <section class="page-header glass-card">
+      <p class="eyebrow">Predict</p>
+      <h1 class="page-title">Describe symptoms on a dedicated page</h1>
+      <p class="page-copy">
+        Enter symptoms here, run the analysis, and you will be moved to the separate
+        results page automatically after a successful prediction.
+      </p>
+    </section>
+
+    <main class="single-panel-layout">
+      <section class="panel glass-card input-panel">
+        <div class="panel-header">
+          <div>
+            <p class="section-kicker">Symptom input</p>
+            <h2>Describe what you feel</h2>
+          </div>
+          <span id="status-pill" class="pill muted">Ready</span>
+        </div>
+
+        <form id="prediction-form" class="prediction-form">
+          <label for="symptoms" class="input-label">Symptoms</label>
+          <textarea
+            id="symptoms"
+            name="symptoms"
+            rows="5"
+            placeholder="Example: headache, nausea, fatigue"
+          ></textarea>
+
+          <div class="helper-row">
+            <p id="helper-text">Pick quick examples or type symptoms manually. The latest result will open on the results page.</p>
+            <button type="submit" class="primary-button">Analyze symptoms</button>
+          </div>
+        </form>
+
+        <div class="example-row">
+          <button class="chip" data-example="itching, skin rash, nodal skin eruptions">Skin irritation set</button>
+          <button class="chip" data-example="headache, nausea, fatigue">General discomfort set</button>
+          <button class="chip" data-example="continuous sneezing, cough, chills">Cold and allergy set</button>
+        </div>
+
+        <div class="catalog">
+          <div class="catalog-header">
+            <div>
+              <p class="section-kicker">Library</p>
+              <h3>Dataset symptom library</h3>
+            </div>
+            <input id="symptom-search" type="search" placeholder="Search symptoms">
+          </div>
+          <div id="symptom-list" class="symptom-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

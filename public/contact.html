@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedRecSys | Contact</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/predict">Predict</a>
+        <a class="nav-link" href="/results">Results</a>
+        <a class="nav-link" href="/developer">Developer</a>
+        <a class="nav-link active" href="/contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-shell">
+    <section class="page-header glass-card">
+      <p class="eyebrow">Contact</p>
+      <h1 class="page-title">Send a realtime message from a dedicated contact page</h1>
+      <p class="page-copy">
+        This form stays separate from prediction and results so communication feels cleaner and easier to manage.
+      </p>
+    </section>
+
+    <section class="panel glass-card contact-panel">
+      <div class="panel-header">
+        <div>
+          <p class="section-kicker">Realtime delivery</p>
+          <h2>Mail goes straight to your inbox</h2>
+        </div>
+        <span id="contact-status-pill" class="pill muted">Ready to send</span>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-copy">
+          <div class="contact-intro-card">
+            <p class="contact-label">Direct delivery</p>
+            <h3>Connected to Gmail SMTP</h3>
+            <p class="contact-lead">
+              Messages from this page are sent to
+              <strong>piyushverma730929@gmail.com</strong> through your Node.js backend.
+            </p>
+          </div>
+
+          <div class="contact-note-card">
+            <p id="contact-helper-text" class="contact-helper">
+              Complete all fields, then click send. You will see success or failure instantly here.
+            </p>
+          </div>
+        </div>
+
+        <form id="contact-form" class="contact-form">
+          <div class="contact-row">
+            <label>
+              <span>First Name</span>
+              <input id="contact-first-name" name="firstName" type="text" placeholder="Piyush" required>
+            </label>
+            <label>
+              <span>Last Name</span>
+              <input id="contact-last-name" name="lastName" type="text" placeholder="Verma" required>
+            </label>
+          </div>
+
+          <label>
+            <span>Email Address</span>
+            <input id="contact-email" name="email" type="email" placeholder="piyushverma730929@gmail.com" required>
+          </label>
+
+          <label>
+            <span>Subject</span>
+            <input id="contact-subject" name="subject" type="text" placeholder="How can we help?" required>
+          </label>
+
+          <label>
+            <span>Message</span>
+            <textarea id="contact-message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+          </label>
+
+          <button id="contact-submit" type="submit" class="primary-button contact-button">Send message</button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

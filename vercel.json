@@ -1,0 +1,30 @@
+{
+  "cleanUrls": false,
+  "functions": {
+    "api/*.js": {
+      "includeFiles": "datasets/archive/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/home",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/predict",
+      "destination": "/predict.html"
+    },
+    {
+      "source": "/results",
+      "destination": "/results.html"
+    },
+    {
+      "source": "/developer",
+      "destination": "/developer.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact.html"
+    }
+  ]
+}

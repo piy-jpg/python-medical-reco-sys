@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedRecSys | Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/predict">Predict</a>
+        <a class="nav-link active" href="/results">Results</a>
+        <a class="nav-link" href="/developer">Developer</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-shell">
+    <section class="page-header glass-card">
+      <p class="eyebrow">Results</p>
+      <h1 class="page-title">Review the latest prediction separately</h1>
+      <p class="page-copy">
+        This page shows the most recent analysis saved from the predict page. Run a
+        new symptom check anytime to refresh these results.
+      </p>
+    </section>
+
+    <section class="panel glass-card results-panel results-page-panel">
+      <div class="panel-header">
+        <div>
+          <p class="section-kicker">Prediction</p>
+          <h2>Recommendation summary</h2>
+        </div>
+        <span id="status-pill" class="pill muted">Waiting for prediction</span>
+      </div>
+
+      <div id="empty-state" class="empty-state">
+        <p class="empty-title">No saved result yet.</p>
+        <p class="empty-copy">
+          Visit the predict page, submit symptoms, and your latest result will appear here automatically.
+        </p>
+        <a class="primary-button inline-button" href="/predict">Go to predict page</a>
+      </div>
+
+      <div id="results" class="results hidden">
+        <section class="result-hero">
+          <div>
+            <p class="section-kicker">Top match</p>
+            <h3 id="predicted-disease">-</h3>
+            <p id="predicted-description" class="description-text"></p>
+            <p id="result-summary" class="result-summary"></p>
+            <p id="result-timestamp" class="result-timestamp"></p>
+          </div>
+          <div class="confidence-card">
+            <span>Confidence</span>
+            <strong id="confidence-score">0%</strong>
+          </div>
+        </section>
+
+        <section class="meta-strip">
+          <div>
+            <span>Matched symptoms</span>
+            <p id="matched-symptoms">-</p>
+          </div>
+          <div>
+            <span>Unknown symptoms</span>
+            <p id="unknown-symptoms">None</p>
+          </div>
+        </section>
+
+        <section class="cards-grid">
+          <article class="info-card">
+            <h4>Precautions</h4>
+            <ul id="precautions-list"></ul>
+          </article>
+          <article class="info-card">
+            <h4>Medications</h4>
+            <ul id="medications-list"></ul>
+          </article>
+          <article class="info-card">
+            <h4>Diet ideas</h4>
+            <ul id="diets-list"></ul>
+          </article>
+          <article class="info-card">
+            <h4>Workouts and habits</h4>
+            <ul id="workouts-list"></ul>
+          </article>
+        </section>
+
+        <section class="alternatives">
+          <h4>Alternative matches</h4>
+          <div id="alternatives-list" class="alternative-list"></div>
+        </section>
+
+        <div id="result-cta" class="result-cta hidden">
+          <a class="primary-button inline-button" href="/predict">Run another prediction</a>
+        </div>
+      </div>
+
+      <div class="disclaimer">
+        This tool is informational only and is not a substitute for diagnosis or treatment from a licensed medical professional.
+      </div>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedRecSys | Smart Health Predictions</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            --secondary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --card-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            --primary-color: #0072ff;
+            --accent-color: #00c6ff;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Inter', sans-serif;
+            color: #444;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- Abstract Background Shapes --- */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out;
+        }
+        .shape-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(0, 198, 255, 0.3);
+            animation-duration: 25s;
+        }
+        .shape-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(37, 117, 252, 0.3);
+            animation-duration: 30s;
+        }
+        .shape-3 {
+            top: 50%;
+            left: 50%;
+            width: 400px;
+            height: 400px;
+            background: rgba(106, 17, 203, 0.2);
+            transform: translate(-50%, -50%);
+            animation-duration: 20s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 40px) scale(1.05); }
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .navbar-brand i {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+        .nav-link {
+            color: #666 !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        .nav-link:hover::after {
+            width: 80%;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+            color: #333;
+            text-align: center;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .hero-section h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1s ease-out;
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1.2s ease-out;
+        }
+        .hero-icon-bounce {
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        /* --- Form Section --- */
+        .form-container {
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 80px;
+        }
+        .glass-card {
+            background: var(--glass-bg);
+            border-radius: 30px;
+            box-shadow: var(--card-shadow);
+            padding: 50px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+        }
+
+        /* Input Styling */
+        .form-label-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px solid transparent;
+            padding: 20px;
+            border-radius: 16px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .form-control:focus {
+            background: #fff;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(0, 198, 255, 0.15);
+        }
+
+        /* Button Styling */
+        .btn-predict {
+            background: var(--secondary-gradient);
+            border: none;
+            padding: 18px 40px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 16px;
+            width: 100%;
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(106, 17, 203, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-predict::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+            z-index: -1;
+        }
+        .btn-predict:hover::before {
+            transform: translateX(100%);
+        }
+        .btn-predict:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(106, 17, 203, 0.4);
+        }
+        .btn-predict:active {
+            transform: translateY(1px);
+        }
+
+        /* --- Results Section --- */
+        .prediction-header h2 {
+            color: #333;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+        }
+        .disease-badge {
+            display: inline-block;
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 12px 40px;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            box-shadow: 0 10px 25px rgba(37, 117, 252, 0.4);
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 117, 252, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(37, 117, 252, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 117, 252, 0); }
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            height: 100%;
+            border: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            transition: all 0.3s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+        }
+        .info-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+        }
+
+        .info-card h5 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .info-card h5 i {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: white;
+        }
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .info-card ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        .info-card ul li:last-child {
+            border-bottom: none;
+        }
+        .info-card ul li::before {
+            content: '✓';
+            color: inherit;
+            font-weight: bold;
+            margin-right: 12px;
+            background: #f0f4f8;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Specific Card Colors */
+        .card-description::before { background: #6c757d; }
+        .card-description h5 i { background: #6c757d; }
+        .card-description ul li::before { color: #6c757d; }
+
+        .card-precaution::before { background: #fd7e14; }
+        .card-precaution h5 i { background: #fd7e14; }
+        .card-precaution ul li::before { color: #fd7e14; }
+
+        .card-medication::before { background: #dc3545; }
+        .card-medication h5 i { background: #dc3545; }
+        .card-medication ul li::before { color: #dc3545; }
+
+        .card-diet::before { background: #198754; }
+        .card-diet h5 i { background: #198754; }
+        .card-diet ul li::before { color: #198754; }
+
+        .card-workout::before { background: #0dcaf0; }
+        .card-workout h5 i { background: #0dcaf0; }
+        .card-workout ul li::before { color: #0dcaf0; }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 40px;
+            font-size: 0.95rem;
+            color: #664d03;
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            color: #666;
+            padding: 60px 0 30px;
+            margin-top: 50px;
+            border-top: 1px solid #eee;
+        }
+        .footer-logo {
+            font-family: 'Poppins', sans-serif;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .social-icons a {
+            display: inline-flex;
+            width: 45px;
+            height: 45px;
+            background: #f0f2f5;
+            color: #555;
+            border-radius: 50%;
+            margin: 0 8px;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+        }
+        .social-icons a:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 114, 255, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        .delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .delay-3 { animation-delay: 0.3s; opacity: 0; }
+        .delay-4 { animation-delay: 0.4s; opacity: 0; }
+        .delay-5 { animation-delay: 0.5s; opacity: 0; }
+
+        /* Spinner */
+        .spinner-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255,255,255,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .spinner-overlay.show {
+            display: flex;
+        }
+        .spinner-grow {
+            width: 3rem;
+            height: 3rem;
+            background: var(--primary-gradient);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Abstract Background -->
+<div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+        <i class="fas fa-heartbeat"></i> MedRecSys
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item"><a class="nav-link" href="/about"><i class="fas fa-info-circle me-1"></i> About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/contact"><i class="fas fa-envelope me-1"></i> Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="/developer"><i class="fas fa-code me-1"></i> Developer</a></li>
+        <li class="nav-item"><a class="nav-link" href="/blog"><i class="fas fa-blog me-1"></i> Blog</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container hero-content">
+        <h1><i class="fas fa-laptop-medical me-3 hero-icon-bounce"></i>AI Health Prediction</h1>
+        <p class="lead">Empower your health decisions with AI-driven insights. Enter your symptoms below to receive potential conditions, care tips, and recommendations.</p>
+    </div>
+</section>
+
+<!-- Loading Overlay -->
+<div class="spinner-overlay" id="loadingSpinner">
+    <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 fw-bold text-primary">Analyzing Symptoms...</p>
+</div>
+
+<!-- Form Section -->
+<section class="form-container container">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="glass-card">
+                {% if message %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endif %}
+
+                <form method="POST" action="/predict" id="predictionForm">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold mb-3">
+                            <i class="fas fa-search-plus me-2 text-primary"></i>Describe your Symptoms
+                        </label>
+                        <textarea
+                            class="form-control"
+                            id="symptoms"
+                            name="symptoms"
+                            rows="4"
+                            placeholder="e.g., continuous_sneezing, chills, fatigue..."
+                            required
+                        ></textarea>
+                        <div class="form-text mt-3 d-flex align-items-center">
+                            <i class="fas fa-lightbulb text-warning me-2"></i>
+                            <span><strong>Tip:</strong> Separate multiple symptoms with commas for higher accuracy.</span>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-predict">
+                        <i class="fas fa-magic me-2"></i> Analyze Symptoms
+                    </button>
+                </form>
+
+                {% if predicted_disease %}
+                <hr class="my-5 border-0" style="height: 2px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));">
+
+                <!-- Prediction Result Header -->
+                <div class="prediction-header">
+                    <h2>Diagnostic Analysis</h2>
+                    <span class="disease-badge">{{ predicted_disease }}</span>
+                </div>
+
+                <!-- Results Grid -->
+                <div class="row g-4 mt-4">
+                    <!-- Description -->
+                    <div class="col-md-12 fade-in delay-1">
+                        <div class="info-card card-description">
+                            <h5><i class="fas fa-file-medical"></i> Overview</h5>
+                            <p class="mb-0" style="line-height: 1.6; color: #555;">{{ dis_des }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Precautions -->
+                    <div class="col-lg-6 fade-in delay-2">
+                        <div class="info-card card-precaution">
+                            <h5><i class="fas fa-shield-virus"></i> Precautions</h5>
+                            <ul>
+                                {% for p in my_precautions %}
+                                    {% if p %}
+                                    <li>{{ p }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Medications -->
+                    <div class="col-lg-6 fade-in delay-3">
+                        <div class="info-card card-medication">
+                            <h5><i class="fas fa-pills"></i> Medications</h5>
+                            <ul>
+                                {% for m in medications %}
+                                    {% if m %}
+                                    <li>{{ m }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Diet -->
+                    <div class="col-lg-6 fade-in delay-4">
+                        <div class="info-card card-diet">
+                            <h5><i class="fas fa-apple-alt"></i> Recommended Diet</h5>
+                            <ul>
+                                {% for d in my_diet %}
+                                    {% if d %}
+                                    <li>{{ d }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Workout -->
+                    <div class="col-lg-6 fade-in delay-5">
+                        <div class="info-card card-workout">
+                            <h5><i class="fas fa-running"></i> Workout Suggestions</h5>
+                            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; font-family: monospace; font-size: 0.9rem;">
+                                {{ workout.to_string(index=False) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="disclaimer mt-5 fade-in">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <strong>Medical Disclaimer:</strong> The information provided by this system is for educational purposes only and is not a substitute for professional medical advice. Always consult a qualified healthcare provider for diagnosis and treatment.
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center">
+    <div class="container">
+        <span class="footer-logo"><i class="fas fa-heartbeat"></i> MedRecSys</span>
+        <div class="social-icons mb-4">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+        <p class="small mb-1 text-muted">&copy; 2025 MedRecSys. All Rights Reserved.</p>
+        <p class="small">
+            <a href="/privacy" class="text-decoration-none text-muted">Privacy Policy</a> |
+            <a href="/terms" class="text-decoration-none text-muted">Terms of Use</a> |
+            <a href="/contact" class="text-decoration-none text-muted">Contact Us</a>
+        </p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Improved Loading Logic
+    document.getElementById('predictionForm').addEventListener('submit', function() {
+        document.getElementById('loadingSpinner').classList.add('show');
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | MedRecSys</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            --secondary-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --card-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            --primary-color: #0072ff;
+            --accent-color: #00c6ff;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
+
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Inter', sans-serif;
+            color: #444;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* --- Abstract Background Shapes --- */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 20s infinite ease-in-out;
+        }
+        .shape-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(0, 198, 255, 0.3);
+            animation-duration: 25s;
+        }
+        .shape-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(37, 117, 252, 0.3);
+            animation-duration: 30s;
+        }
+        .shape-3 {
+            top: 40%;
+            left: 60%;
+            width: 400px;
+            height: 400px;
+            background: rgba(106, 17, 203, 0.2);
+            animation-duration: 20s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 20px) scale(0.9); }
+            75% { transform: translate(20px, 40px) scale(1.05); }
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .navbar-brand i {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.8rem;
+        }
+        .nav-link {
+            color: #666 !important;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 80%;
+        }
+
+        /* --- Hero Section --- */
+        .page-header {
+            padding: 140px 0 60px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .page-header h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInDown 1s ease-out;
+        }
+        .page-header p {
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        /* --- Main Content --- */
+        .main-content {
+            position: relative;
+            z-index: 10;
+            margin-bottom: 80px;
+        }
+
+        /* --- Blog Card Styling --- */
+        .blog-card {
+            background: var(--glass-bg);
+            border-radius: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+        .blog-img-wrapper {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        .blog-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .blog-card:hover .blog-img {
+            transform: scale(1.05);
+        }
+        .blog-category {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .blog-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .blog-meta i {
+            color: var(--primary-color);
+            margin-right: 5px;
+        }
+        .blog-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        .blog-title a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s;
+        }
+        .blog-title a:hover {
+            color: var(--primary-color);
+        }
+        .blog-excerpt {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .btn-read-more {
+            align-self: flex-start;
+            padding: 8px 0;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .btn-read-more:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            color: #666;
+            padding: 40px 0;
+            margin-top: auto;
+            border-top: 1px solid #eee;
+        }
+        .footer-logo {
+            font-family: 'Poppins', sans-serif;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .delay-3 { animation-delay: 0.6s; opacity: 0; }
+    </style>
+</head>
+<body>
+
+<!-- Abstract Background -->
+<div class="bg-shapes">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+        <i class="fas fa-heartbeat"></i> MedRecSys
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item"><a class="nav-link" href="/"><i class="fas fa-home me-1"></i> Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/about"><i class="fas fa-info-circle me-1"></i> About</a></li>
+        <li class="nav-item"><a class="nav-link" href="/contact"><i class="fas fa-envelope me-1"></i> Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="/developer"><i class="fas fa-code me-1"></i> Developer</a></li>
+        <li class="nav-item"><a class="nav-link active" href="/blog"><i class="fas fa-blog me-1"></i> Blog</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-newspaper me-3"></i>Our Blog</h1>
+        <p>Stay updated with the latest news, insights, and advancements in medical technology and healthcare recommendations.</p>
+    </div>
+</header>
+
+<!-- Main Content -->
+<section class="main-content container">
+    <div class="row g-4 justify-content-center">
+
+        <!-- Blog Post 1 -->
+        <div class="col-lg-4 col-md-6 fade-in-up delay-1">
+            <article class="blog-card">
+                <div class="blog-img-wrapper">
+                    <img src="https://placehold.co/600x400/0072ff/ffffff?text=AI+Health" alt="AI in Healthcare" class="blog-img">
+                    <span class="blog-category">Technology</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Oct 24, 2025</span>
+                        <span><i class="far fa-user"></i> Admin</span>
+                    </div>
+                    <h3 class="blog-title"><a href="#">The Future of AI in Personalized Medicine</a></h3>
+                    <p class="blog-excerpt">Discover how artificial intelligence is revolutionizing the way treatments are recommended to patients based on their unique genetic makeup...</p>
+                    <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Blog Post 2 -->
+        <div class="col-lg-4 col-md-6 fade-in-up delay-2">
+            <article class="blog-card">
+                <div class="blog-img-wrapper">
+                    <img src="https://placehold.co/600x400/00c6ff/444444?text=Data+Security" alt="Data Security" class="blog-img">
+                    <span class="blog-category">Security</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Oct 20, 2025</span>
+                        <span><i class="far fa-user"></i> Alex M.</span>
+                    </div>
+                    <h3 class="blog-title"><a href="#">Securing Patient Data in Modern Systems</a></h3>
+                    <p class="blog-excerpt">An in-depth look at the encryption and security protocols used to protect sensitive patient information in medical recommendation engines...</p>
+                    <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Blog Post 3 -->
+        <div class="col-lg-4 col-md-6 fade-in-up delay-3">
+            <article class="blog-card">
+                <div class="blog-img-wrapper">
+                    <img src="https://placehold.co/600x400/6a11cb/ffffff?text=Health+Tips" alt="Health Tips" class="blog-img">
+                    <span class="blog-category">Wellness</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Oct 15, 2025</span>
+                        <span><i class="far fa-user"></i> Dr. Sarah</span>
+                    </div>
+                    <h3 class="blog-title"><a href="#">5 Ways to Improve Your Daily Health</a></h3>
+                    <p class="blog-excerpt">Simple lifestyle changes that can drastically improve your well-being. From diet adjustments to sleep schedules, learn how to live better...</p>
+                    <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Blog Post 4 -->
+        <div class="col-lg-4 col-md-6 fade-in-up delay-1">
+            <article class="blog-card">
+                <div class="blog-img-wrapper">
+                    <img src="https://placehold.co/600x400/2575fc/ffffff?text=MedRecSys" alt="System Update" class="blog-img">
+                    <span class="blog-category">Updates</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Oct 10, 2025</span>
+                        <span><i class="far fa-user"></i> Team</span>
+                    </div>
+                    <h3 class="blog-title"><a href="#">MedRecSys Version 2.0 is Here</a></h3>
+                    <p class="blog-excerpt">We are excited to announce the release of version 2.0, featuring improved recommendation algorithms and a brand new user interface...</p>
+                    <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Blog Post 5 -->
+        <div class="col-lg-4 col-md-6 fade-in-up delay-2">
+            <article class="blog-card">
+                <div class="blog-img-wrapper">
+                    <img src="https://placehold.co/600x400/ebedee/444444?text=Research" alt="Research" class="blog-img">
+                    <span class="blog-category">Research</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Oct 05, 2025</span>
+                        <span><i class="far fa-user"></i> Admin</span>
+                    </div>
+                    <h3 class="blog-title"><a href="#">How Machine Learning Predicts Drug Interactions</a></h3>
+                    <p class="blog-excerpt">A technical overview of the machine learning models utilized to predict potential adverse drug interactions before they happen...</p>
+                    <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Blog Post 6 -->
+        <div class="col-lg-4 col-md-6 fade-in-up delay-3">
+            <article class="blog-card">
+                <div class="blog-img-wrapper">
+                    <img src="https://placehold.co/600x400/fdfbfb/0072ff?text=Community" alt="Community" class="blog-img">
+                    <span class="blog-category">Community</span>
+                </div>
+                <div class="blog-body">
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> Sep 28, 2025</span>
+                        <span><i class="far fa-user"></i> Team</span>
+                    </div>
+                    <h3 class="blog-title"><a href="#">MedRecSys Open Source Initiative</a></h3>
+                    <p class="blog-excerpt">We are opening up parts of our codebase to the developer community. Learn how you can contribute to better healthcare technology...</p>
+                    <a href="#" class="btn-read-more">Read More <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+            </article>
+        </div>
+
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="text-center">
+    <div class="container">
+        <span class="footer-logo"><i class="fas fa-heartbeat"></i> MedRecSys</span>
+        <p class="small mb-1 text-muted">&copy; 2025 MedRecSys. All Rights Reserved.</p>
+        <p class="small">
+            <a href="/privacy" class="text-decoration-none text-muted">Privacy Policy</a> |
+            <a href="/terms" class="text-decoration-none text-muted">Terms of Use</a>
+        </p>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

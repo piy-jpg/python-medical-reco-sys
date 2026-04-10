@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedRecSys | Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
+      <div class="nav-links">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/predict">Predict</a>
+        <a class="nav-link" href="/results">Results</a>
+        <a class="nav-link active" href="/developer">Developer</a>
+        <a class="nav-link" href="/contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-shell">
+    <section class="page-header glass-card">
+      <p class="eyebrow">Developer</p>
+      <h1 class="page-title">Project and technical overview</h1>
+      <p class="page-copy">
+        This page keeps the development details separate from the user-facing prediction
+        and contact pages while preserving the same blue and light-red theme.
+      </p>
+    </section>
+
+    <section class="feature-grid">
+      <article class="feature-box glass-card">
+        <p class="section-kicker">Backend</p>
+        <h3>Node.js HTTP server</h3>
+        <p>The app serves static pages, handles symptom prediction requests, and sends realtime mail through Gmail SMTP.</p>
+      </article>
+
+      <article class="feature-box glass-card">
+        <p class="section-kicker">Frontend</p>
+        <h3>Separate page structure</h3>
+        <p>The interface is split across Home, Predict, Results, Developer, and Contact pages with one shared theme and navigation.</p>
+      </article>
+
+      <article class="feature-box glass-card">
+        <p class="section-kicker">Dataset</p>
+        <h3>CSV powered recommendations</h3>
+        <p>Prediction and supporting advice are generated from the local medical CSV files already present in the project.</p>
+      </article>
+    </section>
+
+    <section class="overview-grid">
+      <article class="overview-card glass-card">
+        <p class="section-kicker">Current stack</p>
+        <h2>HTML, CSS, JavaScript, Node.js</h2>
+        <p>
+          The current working version uses plain HTML, shared CSS, vanilla JavaScript,
+          and a lightweight Node.js server without adding a framework.
+        </p>
+      </article>
+
+      <article class="overview-card glass-card accent-card">
+        <p class="section-kicker">Mail flow</p>
+        <h2>Realtime contact delivery</h2>
+        <p>
+          The contact form submits to the Node backend, which validates the request and
+          sends the mail directly to your configured inbox.
+        </p>
+      </article>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
