@@ -570,12 +570,12 @@ const server = http.createServer((request, response) => {
     return;
   }
 
-  if (request.method === "POST" && url.pathname === "/api/auth/google") {
+  if (request.method === "POST" && (url.pathname === "/api/auth/google" || url.pathname === "/api/auth-google")) {
     handleGoogleAuth(request, response);
     return;
   }
 
-  if (url.pathname === "/api/auth/config") {
+  if (url.pathname === "/api/auth/config" || url.pathname === "/api/auth-config") {
     if (request.method === "GET") {
       safeJson(response, 200, {
         googleClientId: process.env.GOOGLE_CLIENT_ID || ""

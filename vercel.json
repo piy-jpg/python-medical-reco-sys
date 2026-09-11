@@ -37,14 +37,6 @@
     {
       "source": "/signin",
       "destination": "/login.html"
-    },
-    {
-      "source": "/api/auth/google",
-      "destination": "/api/auth-google"
-    },
-    {
-      "source": "/api/auth/config",
-      "destination": "/api/auth-config"
     }
   ]
 }
