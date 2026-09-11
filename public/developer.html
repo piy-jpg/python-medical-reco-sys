@@ -3,83 +3,1024 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MedRecSys | Developer</title>
+  <title>Developer & Project Architecture | MedRecSys</title>
+  <meta name="description" content="Meet Piyush Verma, developer and AI creator behind MedRecSys — an intelligent symptom analysis and health advisory platform.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/developer.css">
 </head>
-<body>
-  <div class="bg-shapes" aria-hidden="true">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
+<body class="developer-page">
+  <!-- Ambient background glow elements -->
+  <div class="dev-bg-ambient" aria-hidden="true">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="ambient-grid"></div>
   </div>
 
-  <nav class="navbar">
-    <div class="nav-container">
-      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
-      <div class="nav-links">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/predict">Predict</a>
-        <a class="nav-link" href="/results">Results</a>
-        <a class="nav-link active" href="/developer">Developer</a>
-        <a class="nav-link" href="/contact">Contact</a>
+  <!-- 1. NAVIGATION BAR -->
+  <header class="dev-navbar-wrapper">
+    <nav class="dev-navbar">
+      <a class="dev-navbar-brand" href="/">
+        <div class="dev-brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+        <span class="dev-brand-text">Med<span>RecSys</span></span>
+      </a>
+
+      <ul class="dev-nav-menu">
+        <li><a class="dev-nav-link" href="/">Home</a></li>
+        <li><a class="dev-nav-link" href="/predict">Predict</a></li>
+        <li><a class="dev-nav-link" href="/results">Results</a></li>
+        <li><a class="dev-nav-link active" href="/developer">Developer</a></li>
+        <li><a class="dev-nav-link" href="/contact">Contact</a></li>
+        <li><a class="dev-nav-link" href="/login">Sign In</a></li>
+      </ul>
+
+      <div class="dev-navbar-right">
+        <a class="dev-btn-nav-action" href="/predict">
+          <span>Try MedRecSys</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <button class="dev-hamburger-btn" id="devHamburgerBtn" aria-label="Toggle navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="dev-mobile-nav" id="devMobileNav">
+      <a class="dev-nav-link" href="/">Home</a>
+      <a class="dev-nav-link" href="/predict">Predict</a>
+      <a class="dev-nav-link" href="/results">Results</a>
+      <a class="dev-nav-link active" href="/developer">Developer</a>
+      <a class="dev-nav-link" href="/contact">Contact</a>
+      <a class="dev-nav-link" href="/login">Sign In</a>
+      <a class="dev-btn-primary" href="/predict" style="text-align:center; justify-content:center; margin-top:8px;">
+        <span>Launch Analysis</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- 2. DEVELOPER HERO (Split Screen) -->
+    <section class="dev-hero-section">
+      <div class="dev-container">
+        <div class="dev-hero-grid">
+          <!-- Left Column -->
+          <div class="dev-hero-left">
+            <div class="dev-eyebrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              <span>Developer &amp; AI Creator</span>
+            </div>
+            <h1 class="dev-hero-title">
+              Hi, I'm <span class="text-gradient">Piyush Verma</span>.<br>
+              Building Intelligent Healthcare Systems.
+            </h1>
+            <p class="dev-hero-subtitle">
+              Software developer and machine learning practitioner. Creator of MedRecSys — an AI-powered clinical symptom analysis system designed to translate complex medical data into accessible, pattern-aware health guidance.
+            </p>
+            <div class="dev-hero-buttons">
+              <a class="dev-btn-primary" href="#architecture">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <span>Explore Architecture</span>
+              </a>
+              <a class="dev-btn-secondary" href="/predict">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                </svg>
+                <span>Live Predict Demo</span>
+              </a>
+              <a class="dev-btn-secondary" href="https://github.com/piy-jpg" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                </svg>
+                <span>GitHub Profile</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right Column: Profile Showcase Card -->
+          <div class="dev-hero-right">
+            <div class="dev-profile-showcase-card">
+              <!-- Floating Badges -->
+              <div class="dev-float-badge badge-top-left">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0066ff" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                <span>AI / ML Engineer</span>
+              </div>
+              <div class="dev-float-badge badge-top-right">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00c2ff" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                <span>Full-Stack</span>
+              </div>
+              <div class="dev-float-badge badge-bottom-left">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
+                <span>MedRecSys Creator</span>
+              </div>
+              <div class="dev-float-badge badge-bottom-right">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                <span>Healthcare Tech</span>
+              </div>
+
+              <!-- Profile Avatar -->
+              <div class="dev-photo-ring">
+                <img class="dev-photo-img" src="/piyush-verma.jpg" alt="Piyush Verma - Developer and AI Creator of MedRecSys">
+              </div>
+
+              <div class="dev-profile-meta-label">Software Developer</div>
+              <h2 class="dev-profile-name">Piyush Verma</h2>
+              <p class="dev-profile-tagline">Machine Learning &amp; Web Platform Engineering</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ABOUT THE DEVELOPER -->
+    <section class="dev-section" id="about-developer">
+      <div class="dev-container">
+        <div class="dev-card dev-about-card">
+          <div class="dev-about-copy">
+            <div class="dev-eyebrow">Biography &amp; Background</div>
+            <h3>Crafting Technology with Meaningful Real-World Impact</h3>
+            <p>
+              I am a software developer with a strong focus on artificial intelligence, machine learning pipelines, and modern web application development. I believe computational intelligence is most powerful when paired with intuitive, accessible user experiences.
+            </p>
+            <p>
+              MedRecSys represents my commitment to building responsible, privacy-respecting healthcare technology. By combining rigorous scientific classification algorithms with clean full-stack engineering, my goal is to make preliminary health analysis understandable and actionable for anyone, anywhere.
+            </p>
+            <div class="dev-badges-row">
+              <span class="dev-tech-badge">Python</span>
+              <span class="dev-tech-badge">Node.js</span>
+              <span class="dev-tech-badge">Scikit-Learn</span>
+              <span class="dev-tech-badge">JavaScript (ES6+)</span>
+              <span class="dev-tech-badge">Machine Learning</span>
+              <span class="dev-tech-badge">Predictive Modeling</span>
+              <span class="dev-tech-badge">UI/UX Architecture</span>
+            </div>
+          </div>
+          <div class="dev-about-stats-grid">
+            <div class="dev-meta-box">
+              <span class="dev-meta-box-label">Primary Specialization</span>
+              <div class="dev-meta-box-value">AI/ML &amp; Web Platforms</div>
+            </div>
+            <div class="dev-meta-box">
+              <span class="dev-meta-box-label">Code Repository</span>
+              <div class="dev-meta-box-value">piy-jpg / MedRecSys</div>
+            </div>
+            <div class="dev-meta-box">
+              <span class="dev-meta-box-label">Design Philosophy</span>
+              <div class="dev-meta-box-value">Human-Centered Medical UI</div>
+            </div>
+            <div class="dev-meta-box">
+              <span class="dev-meta-box-label">Engineering Focus</span>
+              <div class="dev-meta-box-value">Deterministic Machine Learning</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ABOUT MEDRECSYS SHOWCASE -->
+    <section class="dev-section" id="project-overview">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Project Overview</div>
+          <h2 class="dev-section-title">What is MedRecSys?</h2>
+          <p class="dev-section-subtitle">
+            A comprehensive, patient-oriented medical recommendation and symptom analysis platform powered by Support Vector Machine classification.
+          </p>
+        </div>
+
+        <div class="dev-card dev-project-showcase">
+          <div class="dev-project-showcase-info">
+            <h3 style="font-size:1.5rem; font-weight:700; color:var(--navy-dark); margin-bottom:14px;">Bridging Symptom Awareness and Clinical Knowledge</h3>
+            <p style="font-size:0.96rem; color:var(--text-secondary); line-height:1.7; margin-bottom:20px;">
+              MedRecSys correlates complex combinations of patient-reported symptoms against structured clinical disease datasets. Rather than offering black-box speculation, it maps feature vectors to verified conditions and surfaces actionable lifestyle, dietary, and medical guidance.
+            </p>
+            <div class="dev-project-meta-list">
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Inference Engine</span>
+                <span class="dev-meta-box-value">Support Vector Classifier (SVC)</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Symptom Corpus</span>
+                <span class="dev-meta-box-value">131 Clinical Indicators</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Diagnostic Targets</span>
+                <span class="dev-meta-box-value">41 Pathological Classes</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Clinical Guidance</span>
+                <span class="dev-meta-box-value">Precaution, Diet, Meds &amp; Fitness</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dev-project-screens-preview">
+            <a class="dev-mini-screen-card" href="/" style="text-decoration:none;">
+              <div class="dev-screen-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+              </div>
+              <span>Home Hub</span>
+              <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Landing &amp; Vision</p>
+            </a>
+
+            <a class="dev-mini-screen-card" href="/predict" style="text-decoration:none;">
+              <div class="dev-screen-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                </svg>
+              </div>
+              <span>Predict Desk</span>
+              <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">131-Item Picker</p>
+            </a>
+
+            <a class="dev-mini-screen-card" href="/results" style="text-decoration:none;">
+              <div class="dev-screen-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <span>AI Results</span>
+              <p style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">Full Clinical Report</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. WHAT I BUILT (6 Core Architectural Modules) -->
+    <section class="dev-section" id="what-i-built">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Core Engineering</div>
+          <h2 class="dev-section-title">What I Built Across MedRecSys</h2>
+          <p class="dev-section-subtitle">
+            From algorithmic machine learning pipelines to accessible, high-performance web frontends.
+          </p>
+        </div>
+
+        <div class="dev-built-grid">
+          <!-- Card 1 -->
+          <div class="dev-card dev-built-card">
+            <div class="dev-built-header">
+              <div class="dev-built-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <span class="dev-built-num">01</span>
+            </div>
+            <h3>AI Prediction Engine</h3>
+            <p>
+              Trained Support Vector Machine algorithm that maps multi-symptom high-dimensional inputs into deterministic probabilistic disease classifications.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="dev-card dev-built-card">
+            <div class="dev-built-header">
+              <div class="dev-built-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+              </div>
+              <span class="dev-built-num">02</span>
+            </div>
+            <h3>Full Multi-Page Architecture</h3>
+            <p>
+              Engineered distinct, cohesive page experiences across Home, Predict, Results, Developer, and Contact with zero framework bloat.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="dev-card dev-built-card">
+            <div class="dev-built-header">
+              <div class="dev-built-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </div>
+              <span class="dev-built-num">03</span>
+            </div>
+            <h3>Interactive Symptom Selector</h3>
+            <p>
+              Real-time searchable library of 131 clinical symptoms with quick one-click syndrome chips, scrollbar filtering, and instant counter feedback.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="dev-card dev-built-card">
+            <div class="dev-built-header">
+              <div class="dev-built-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <span class="dev-built-num">04</span>
+            </div>
+            <h3>Confidence Scoring &amp; Gauge</h3>
+            <p>
+              Dynamic SVG radial confidence gauge that visualizes model certainty alongside structured condition descriptors and clinical advisory cards.
+            </p>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="dev-card dev-built-card">
+            <div class="dev-built-header">
+              <div class="dev-built-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <span class="dev-built-num">05</span>
+            </div>
+            <h3>Medical Knowledge Base</h3>
+            <p>
+              Integrated tabular datasets cross-referencing disease predictions with tailored precautions, medications, nutritional diets, and workout guidance.
+            </p>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="dev-card dev-built-card">
+            <div class="dev-built-header">
+              <div class="dev-built-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+              </div>
+              <span class="dev-built-num">06</span>
+            </div>
+            <h3>Automated Email Delivery</h3>
+            <p>
+              Secure SMTP integration through Nodemailer in Node.js, providing instant transactional communication for developer inquiries and user feedback.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. TECHNOLOGY STACK (Grouped) -->
+    <section class="dev-section" id="technology-stack">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Technical Stack</div>
+          <h2 class="dev-section-title">Technologies &amp; Frameworks</h2>
+          <p class="dev-section-subtitle">
+            A cohesive stack chosen for speed, reliability, and maintainability across both client and machine learning backends.
+          </p>
+        </div>
+
+        <div class="dev-tech-groups-grid">
+          <!-- Group 1: Frontend -->
+          <div class="dev-card dev-tech-group-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              Frontend Engineering
+            </h3>
+            <div class="dev-tech-items-list">
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Semantic HTML5</div>
+                  <div class="dev-tech-item-desc">Accessible, screen-reader friendly document structure.</div>
+                </div>
+              </div>
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Modular Modern CSS3</div>
+                  <div class="dev-tech-item-desc">CSS Grid, Flexbox, custom design tokens, and smooth responsive states.</div>
+                </div>
+              </div>
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Vanilla JavaScript (ES6+)</div>
+                  <div class="dev-tech-item-desc">Fast DOM manipulation, state sync, and asynchronous REST fetch calls.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 2: Backend & Server -->
+          <div class="dev-card dev-tech-group-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+              Backend &amp; Server
+            </h3>
+            <div class="dev-tech-items-list">
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Node.js HTTP Server</div>
+                  <div class="dev-tech-item-desc">Non-blocking runtime serving dynamic endpoints and static assets.</div>
+                </div>
+              </div>
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Serverless Architecture</div>
+                  <div class="dev-tech-item-desc">Lightweight edge-ready handlers for serverless cloud execution.</div>
+                </div>
+              </div>
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Nodemailer SMTP</div>
+                  <div class="dev-tech-item-desc">Configured email dispatch delivering contact messages in real time.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 3: AI / Machine Learning -->
+          <div class="dev-card dev-tech-group-card">
+            <h3>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="2"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2z"></path><path d="M12 6v6l4 2"></path></svg>
+              AI &amp; Machine Learning
+            </h3>
+            <div class="dev-tech-items-list">
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Python Data Ecosystem</div>
+                  <div class="dev-tech-item-desc">NumPy, Pandas, and Jupyter Notebook prototyping workflow.</div>
+                </div>
+              </div>
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Scikit-Learn (SVC)</div>
+                  <div class="dev-tech-item-desc">High-dimensional margin classifier trained for multi-class classification.</div>
+                </div>
+              </div>
+              <div class="dev-tech-item">
+                <div>
+                  <div class="dev-tech-item-name">Pickle Model Serializer</div>
+                  <div class="dev-tech-item-desc">Compact binary model persistence (<code>svc.pkl</code>) for rapid loading.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. AI / ML SECTION & WORKFLOW ("Inside the Intelligence") -->
+    <section class="dev-section" id="ai-workflow">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Inside the Intelligence</div>
+          <h2 class="dev-section-title">The Machine Learning Workflow</h2>
+          <p class="dev-section-subtitle">
+            How MedRecSys transforms discrete symptom observations into structured medical predictions.
+          </p>
+        </div>
+
+        <div class="dev-ai-grid">
+          <div class="dev-ai-workflow-steps">
+            <div class="dev-step-card">
+              <div class="dev-step-badge">1</div>
+              <div>
+                <h4>Symptom Ingestion &amp; Tokenization</h4>
+                <p>User selects or types symptoms; values are sanitized, deduplicated, and mapped to standard medical identifiers.</p>
+              </div>
+            </div>
+
+            <div class="dev-step-card">
+              <div class="dev-step-badge">2</div>
+              <div>
+                <h4>Binary Feature Vectorization</h4>
+                <p>An array of 131 binary flags (0 or 1) is constructed representing the presence or absence of each clinical symptom.</p>
+              </div>
+            </div>
+
+            <div class="dev-step-card">
+              <div class="dev-step-badge">3</div>
+              <div>
+                <h4>Support Vector Machine Inference</h4>
+                <p>The pre-trained linear/RBF kernel evaluates the symptom vector across multidimensional hyperplanes to predict the target disease.</p>
+              </div>
+            </div>
+
+            <div class="dev-step-card">
+              <div class="dev-step-badge">4</div>
+              <div>
+                <h4>Medical Knowledge Base Query</h4>
+                <p>The predicted condition acts as a primary key to fetch associated clinical precautions, diets, medications, and workouts.</p>
+              </div>
+            </div>
+
+            <div class="dev-step-card">
+              <div class="dev-step-badge">5</div>
+              <div>
+                <h4>Structured Health Report Synthesis</h4>
+                <p>The client renders a responsive report with confidence assessment, clear safety reminders, and doctor consultation guidance.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Neural Network Visual Card -->
+          <div class="dev-neural-visual">
+            <div style="font-size:0.76rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-cyan); margin-bottom:12px;">Inference Pipeline Visualizer</div>
+            <h3 style="font-size:1.6rem; font-weight:800; margin-bottom:14px;">Deterministic Pattern Matching</h3>
+            <p style="font-size:0.92rem; color:#cbd5e1; line-height:1.6; margin-bottom:28px;">
+              Unlike generative language models prone to hallucination, MedRecSys uses deterministic classification bounded by real training datasets.
+            </p>
+            <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; text-align:center;">
+              <div style="background:rgba(255,255,255,0.06); padding:14px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                <div style="font-size:1.4rem; font-weight:800; color:#00c2ff;">131</div>
+                <div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">Input Neurons</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.06); padding:14px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                <div style="font-size:1.4rem; font-weight:800; color:#38bdf8;">SVC</div>
+                <div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">Margin Kernel</div>
+              </div>
+              <div style="background:rgba(255,255,255,0.06); padding:14px 10px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+                <div style="font-size:1.4rem; font-weight:800; color:#10b981;">41</div>
+                <div style="font-size:0.75rem; color:#94a3b8; margin-top:2px;">Disease Classes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. SYSTEM ARCHITECTURE FLOW -->
+    <section class="dev-section" id="architecture">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">System Architecture</div>
+          <h2 class="dev-section-title">End-to-End System Pipeline</h2>
+          <p class="dev-section-subtitle">
+            A modular and secure data flow from user interaction to predictive synthesis.
+          </p>
+        </div>
+
+        <div class="dev-card">
+          <div class="dev-arch-flow">
+            <div class="dev-arch-node">
+              <span>Client Tier</span>
+              <strong>Browser UI (HTML/CSS/JS)</strong>
+            </div>
+            <div class="dev-arch-arrow">➔</div>
+            <div class="dev-arch-node">
+              <span>Server Tier</span>
+              <strong>Node.js / Edge Server</strong>
+            </div>
+            <div class="dev-arch-arrow">➔</div>
+            <div class="dev-arch-node">
+              <span>ML Engine</span>
+              <strong>SVC Vector Classifier</strong>
+            </div>
+            <div class="dev-arch-arrow">➔</div>
+            <div class="dev-arch-node">
+              <span>Knowledge Tier</span>
+              <strong>Clinical CSV Datasets</strong>
+            </div>
+            <div class="dev-arch-arrow">➔</div>
+            <div class="dev-arch-node">
+              <span>Presentation</span>
+              <strong>Personalized Report</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. DATASET & MODEL DETAILS -->
+    <section class="dev-section" id="dataset-and-model">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Data Foundation</div>
+          <h2 class="dev-section-title">Dataset &amp; Machine Learning Model</h2>
+          <p class="dev-section-subtitle">
+            Built on verified medical symptom matrices and supervised learning algorithms.
+          </p>
+        </div>
+
+        <div class="dev-data-model-grid">
+          <!-- Card 1: Machine Learning Model -->
+          <div class="dev-card dev-dm-card">
+            <div class="dev-eyebrow">Classification Model</div>
+            <h3>Support Vector Classifier (SVC)</h3>
+            <p>
+              Support Vector Machines are effective in high-dimensional feature spaces where the number of dimensions exceeds common observation counts. In MedRecSys, SVC maximizes the margin between different disease clusters, ensuring robust classification even with sparse symptom combinations.
+            </p>
+            <div class="dev-project-meta-list">
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Algorithm</span>
+                <span class="dev-meta-box-value">Support Vector Machine</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Inference Mode</span>
+                <span class="dev-meta-box-value">Supervised Multi-Class</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Serialization</span>
+                <span class="dev-meta-box-value">Pickle (.pkl) Binary</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Execution Time</span>
+                <span class="dev-meta-box-value">&lt; 100ms In-Memory</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Dataset Corpus -->
+          <div class="dev-card dev-dm-card">
+            <div class="dev-eyebrow">Knowledge Corpus</div>
+            <h3>Medical Symptom &amp; Advice Tables</h3>
+            <p>
+              The training and recommendation foundation is structured across curated tabular medical datasets. Each diagnosis connects directly to multi-layered clinical advice, including preventative actions, dietary recommendations, medications, and physical exercise guidelines.
+            </p>
+            <div class="dev-project-meta-list">
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Symptoms Library</span>
+                <span class="dev-meta-box-value">131 Clinical Symptoms</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Target Diseases</span>
+                <span class="dev-meta-box-value">41 Condition Classes</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Support Tables</span>
+                <span class="dev-meta-box-value">Precautions, Diets, Meds</span>
+              </div>
+              <div class="dev-meta-box">
+                <span class="dev-meta-box-label">Format</span>
+                <span class="dev-meta-box-value">Clean Structured CSV</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. TIMELINE / DEVELOPMENT JOURNEY -->
+    <section class="dev-section" id="journey">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Milestones</div>
+          <h2 class="dev-section-title">Development Journey</h2>
+          <p class="dev-section-subtitle">
+            From initial concept and notebook exploratory analysis to a production-ready medical platform.
+          </p>
+        </div>
+
+        <div class="dev-timeline-grid">
+          <div class="dev-timeline-card">
+            <span class="dev-tl-num">01</span>
+            <h4>Problem Identification</h4>
+            <p>Analyzed the friction users face when attempting to understand preliminary symptom patterns prior to scheduling clinic appointments.</p>
+          </div>
+          <div class="dev-timeline-card">
+            <span class="dev-tl-num">02</span>
+            <h4>ML Exploration &amp; Training</h4>
+            <p>Explored multiple classification models in Jupyter Notebook, settling on Support Vector Classification for optimal high-dimensional accuracy.</p>
+          </div>
+          <div class="dev-timeline-card">
+            <span class="dev-tl-num">03</span>
+            <h4>Pipeline Serialization</h4>
+            <p>Extracted model weights to <code>svc.pkl</code> and linked structured disease CSVs for precautions, diets, workouts, and medications.</p>
+          </div>
+          <div class="dev-timeline-card">
+            <span class="dev-tl-num">04</span>
+            <h4>Full-Stack Engineering</h4>
+            <p>Developed the Node.js server, route handlers, real-time mail dispatch with Nodemailer, and dynamic symptom prediction handlers.</p>
+          </div>
+          <div class="dev-timeline-card">
+            <span class="dev-tl-num">05</span>
+            <h4>Modern UI/UX Overhaul</h4>
+            <p>Redesigned the frontend into a modern AI healthcare SaaS interface across Home, Predict, Results, and Developer pages.</p>
+          </div>
+          <div class="dev-timeline-card">
+            <span class="dev-tl-num">06</span>
+            <h4>Edge Optimization</h4>
+            <p>Configured zero-config deployment on Vercel with serverless API functions and complete responsive cross-device validation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. TERMINAL CODE WINDOW -->
+    <section class="dev-section" id="code-preview">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Code Snapshot</div>
+          <h2 class="dev-section-title">Clean, Transparent Engineering</h2>
+          <p class="dev-section-subtitle">
+            A look inside the symptom vectorization and classification logic powering MedRecSys.
+          </p>
+        </div>
+
+        <div class="dev-code-window">
+          <div class="dev-code-header">
+            <div class="dev-code-dots">
+              <span class="dev-dot dev-dot-red"></span>
+              <span class="dev-dot dev-dot-yellow"></span>
+              <span class="dev-dot dev-dot-green"></span>
+            </div>
+            <div style="color:#94a3b8; font-size:0.8rem; font-family:monospace;">medrecsys/ml_inference.py</div>
+            <div style="color:#64748b; font-size:0.75rem;">Python 3.10</div>
+          </div>
+          <pre class="dev-code-body"><code><span style="color:#64748b;"># MedRecSys: High-Dimensional Vectorization &amp; SVC Inference</span>
+<span style="color:#f472b6;">import</span> <span style="color:#38bdf8;">pickle</span>
+<span style="color:#f472b6;">import</span> <span style="color:#38bdf8;">numpy</span> <span style="color:#f472b6;">as</span> <span style="color:#38bdf8;">np</span>
+
+<span style="color:#64748b;"># 1. Load pre-trained Support Vector Classifier</span>
+<span style="color:#f472b6;">with</span> open(<span style="color:#34d399;">'svc.pkl'</span>, <span style="color:#34d399;">'rb'</span>) <span style="color:#f472b6;">as</span> f:
+    svc_model = pickle.load(f)
+
+<span style="color:#f472b6;">def</span> <span style="color:#60a5fa;">predict_disease</span>(user_symptoms, symptom_dictionary):
+    <span style="color:#64748b;">"""Encode 131 clinical features into binary vector and run inference"""</span>
+    feature_vector = np.zeros(len(symptom_dictionary), dtype=int)
+    <span style="color:#f472b6;">for</span> symptom <span style="color:#f472b6;">in</span> user_symptoms:
+        <span style="color:#f472b6;">if</span> symptom <span style="color:#f472b6;">in</span> symptom_dictionary:
+            feature_vector[symptom_dictionary[symptom]] = <span style="color:#fbbf24;">1</span>
+
+    <span style="color:#64748b;"># Run deterministic prediction across separating hyperplanes</span>
+    predicted_class = svc_model.predict([feature_vector])[<span style="color:#fbbf24;">0</span>]
+    <span style="color:#f472b6;">return</span> predicted_class</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. SKILLS & EXPERTISE (No fabricated percentages) -->
+    <section class="dev-section" id="skills">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Capabilities</div>
+          <h2 class="dev-section-title">Technical Skills &amp; Domain Expertise</h2>
+          <p class="dev-section-subtitle">
+            Core competencies honed through hands-on software development and machine learning projects.
+          </p>
+        </div>
+
+        <div class="dev-skills-grid">
+          <div class="dev-skill-card">
+            <div class="dev-skill-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div>
+              <div class="dev-skill-name">Machine Learning</div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Scikit-Learn, NumPy, Data Cleaning</div>
+            </div>
+          </div>
+
+          <div class="dev-skill-card">
+            <div class="dev-skill-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <div>
+              <div class="dev-skill-name">Full-Stack Development</div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Node.js, Vanilla JavaScript, HTML/CSS</div>
+            </div>
+          </div>
+
+          <div class="dev-skill-card">
+            <div class="dev-skill-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <div>
+              <div class="dev-skill-name">API &amp; System Architecture</div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">RESTful APIs, SMTP, Cloud Functions</div>
+            </div>
+          </div>
+
+          <div class="dev-skill-card">
+            <div class="dev-skill-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
+            </div>
+            <div>
+              <div class="dev-skill-name">UI / UX Design</div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Modern SaaS Interfaces, Mobile Responsive</div>
+            </div>
+          </div>
+
+          <div class="dev-skill-card">
+            <div class="dev-skill-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            </div>
+            <div>
+              <div class="dev-skill-name">Deployment &amp; DevOps</div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Vercel, Git &amp; GitHub, Continuous Delivery</div>
+            </div>
+          </div>
+
+          <div class="dev-skill-card">
+            <div class="dev-skill-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div>
+              <div class="dev-skill-name">Responsible AI Ethics</div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">Guardrails, Medical Non-Diagnostic UI</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. PROJECT PAGES GALLERY -->
+    <section class="dev-section" id="project-gallery">
+      <div class="dev-container">
+        <div class="dev-section-header">
+          <div class="dev-eyebrow">Project Showcase</div>
+          <h2 class="dev-section-title">Explore MedRecSys Pages</h2>
+          <p class="dev-section-subtitle">
+            Every page is crafted to deliver a unified, premium healthcare software experience.
+          </p>
+        </div>
+
+        <div class="dev-gallery-grid">
+          <a class="dev-gallery-card" href="/" style="text-decoration:none;">
+            <div class="dev-gallery-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
+            </div>
+            <h4>Home Page</h4>
+            <p>Modern hero section, system capabilities, metrics counter, and platform introduction.</p>
+          </a>
+
+          <a class="dev-gallery-card" href="/predict" style="text-decoration:none;">
+            <div class="dev-gallery-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <h4>Predict Workspace</h4>
+            <p>Interactive 131-symptom browser, fast search filter, chips, and analysis triggers.</p>
+          </a>
+
+          <a class="dev-gallery-card" href="/results" style="text-decoration:none;">
+            <div class="dev-gallery-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            </div>
+            <h4>Results Report</h4>
+            <p>Radial confidence gauge, structured diagnosis, and multi-tab medical guidance.</p>
+          </a>
+
+          <a class="dev-gallery-card" href="/contact" style="text-decoration:none;">
+            <div class="dev-gallery-icon-wrap">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <h4>Contact Portal</h4>
+            <p>Real-time validated contact form with Nodemailer email notifications.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. RESPONSIBLE AI & MEDICAL DISCLAIMER -->
+    <section class="dev-section" id="responsible-ai">
+      <div class="dev-container">
+        <div class="dev-responsible-card">
+          <div style="color:var(--accent-blue); flex-shrink:0;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div>
+            <h4 style="font-size:1.15rem; font-weight:700; color:var(--navy-dark); margin-bottom:8px;">
+              Responsible AI Engineering &amp; Clinical Safety Principles
+            </h4>
+            <p style="font-size:0.92rem; color:var(--text-secondary); line-height:1.65;">
+              MedRecSys is developed strictly as an educational and preliminary informational technology demonstration. It is not an FDA-approved clinical diagnostic instrument and does not replace evaluation, diagnosis, or treatment by a licensed physician or medical professional. In the event of severe symptoms or medical emergencies, users must immediately seek professional emergency medical services.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. DEVELOPER CONTACT & CALL TO ACTION -->
+    <section class="dev-section" id="developer-cta">
+      <div class="dev-container">
+        <div class="dev-cta-card">
+          <h2>Let's Connect &amp; Collaborate</h2>
+          <p>
+            Interested in the code architecture, machine learning model details, or exploring new software engineering opportunities together?
+          </p>
+          <div class="dev-cta-buttons">
+            <a class="dev-btn-primary" href="/contact">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>Send Me a Message</span>
+            </a>
+            <a class="dev-btn-secondary" href="https://github.com/piy-jpg" target="_blank" rel="noopener noreferrer" style="background:rgba(255,255,255,0.12); color:#ffffff; border-color:rgba(255,255,255,0.2);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              <span>Visit GitHub @piy-jpg</span>
+            </a>
+            <a class="dev-btn-secondary" href="/predict" style="background:rgba(255,255,255,0.12); color:#ffffff; border-color:rgba(255,255,255,0.2);">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>Test Symptom Predictor</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 16. FOOTER (Matching other pages) -->
+  <footer class="dev-footer">
+    <div class="dev-container">
+      <div class="dev-footer-grid">
+        <div class="dev-footer-brand-col">
+          <a class="dev-navbar-brand" href="/">
+            <div class="dev-brand-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </div>
+            <span class="dev-brand-text">Med<span>RecSys</span></span>
+          </a>
+          <p class="dev-footer-tagline">
+            Next-generation AI medical symptom recommendation platform developed with scikit-learn and high-performance web standards.
+          </p>
+        </div>
+
+        <div class="dev-footer-links-col">
+          <div class="dev-footer-col-title">Navigation</div>
+          <a class="dev-footer-link" href="/">Home</a>
+          <a class="dev-footer-link" href="/predict">Predict Workspace</a>
+          <a class="dev-footer-link" href="/results">Analysis Results</a>
+          <a class="dev-footer-link" href="/developer">Developer Profile</a>
+          <a class="dev-footer-link" href="/contact">Contact</a>
+        </div>
+
+        <div class="dev-footer-links-col">
+          <div class="dev-footer-col-title">Technical Deep-Dive</div>
+          <a class="dev-footer-link" href="#architecture">System Architecture</a>
+          <a class="dev-footer-link" href="#ai-workflow">ML Workflow</a>
+          <a class="dev-footer-link" href="#dataset-and-model">Dataset &amp; SVC Model</a>
+          <a class="dev-footer-link" href="#technology-stack">Tech Stack</a>
+          <a class="dev-footer-link" href="#responsible-ai">Responsible AI Ethics</a>
+        </div>
+
+        <div class="dev-footer-links-col">
+          <div class="dev-footer-col-title">Creator</div>
+          <a class="dev-footer-link" href="https://github.com/piy-jpg" target="_blank" rel="noopener noreferrer">GitHub @piy-jpg</a>
+          <a class="dev-footer-link" href="/contact">Contact Developer</a>
+          <span style="font-size:0.86rem; color:var(--text-muted); margin-top:4px;">Piyush Verma</span>
+        </div>
+      </div>
+
+      <div class="dev-footer-bottom">
+        <div>&copy; 2026 MedRecSys &bull; Developed by Piyush Verma. All rights reserved.</div>
+        <div>Designed for educational and informational purposes only. Non-diagnostic.</div>
       </div>
     </div>
-  </nav>
+  </footer>
 
-  <div class="page-shell">
-    <section class="page-header glass-card">
-      <p class="eyebrow">Developer</p>
-      <h1 class="page-title">Project and technical overview</h1>
-      <p class="page-copy">
-        This page keeps the development details separate from the user-facing prediction
-        and contact pages while preserving the same blue and light-red theme.
-      </p>
-    </section>
+  <!-- Script for Mobile Menu Toggle and Smooth Navigation -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const hamburgerBtn = document.getElementById('devHamburgerBtn');
+      const mobileNav = document.getElementById('devMobileNav');
 
-    <section class="feature-grid">
-      <article class="feature-box glass-card">
-        <p class="section-kicker">Backend</p>
-        <h3>Node.js HTTP server</h3>
-        <p>The app serves static pages, handles symptom prediction requests, and sends realtime mail through Gmail SMTP.</p>
-      </article>
+      if (hamburgerBtn && mobileNav) {
+        hamburgerBtn.addEventListener('click', () => {
+          mobileNav.classList.toggle('open');
+        });
 
-      <article class="feature-box glass-card">
-        <p class="section-kicker">Frontend</p>
-        <h3>Separate page structure</h3>
-        <p>The interface is split across Home, Predict, Results, Developer, and Contact pages with one shared theme and navigation.</p>
-      </article>
-
-      <article class="feature-box glass-card">
-        <p class="section-kicker">Dataset</p>
-        <h3>CSV powered recommendations</h3>
-        <p>Prediction and supporting advice are generated from the local medical CSV files already present in the project.</p>
-      </article>
-    </section>
-
-    <section class="overview-grid">
-      <article class="overview-card glass-card">
-        <p class="section-kicker">Current stack</p>
-        <h2>HTML, CSS, JavaScript, Node.js</h2>
-        <p>
-          The current working version uses plain HTML, shared CSS, vanilla JavaScript,
-          and a lightweight Node.js server without adding a framework.
-        </p>
-      </article>
-
-      <article class="overview-card glass-card accent-card">
-        <p class="section-kicker">Mail flow</p>
-        <h2>Realtime contact delivery</h2>
-        <p>
-          The contact form submits to the Node backend, which validates the request and
-          sends the mail directly to your configured inbox.
-        </p>
-      </article>
-    </section>
-  </div>
-
-  <script src="/app.js"></script>
+        // Close menu when clicking on any mobile nav link
+        mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileNav.classList.remove('open');
+          });
+        });
+      }
+    });
+  </script>
+  <script src="/user-session.js" defer></script>
 </body>
 </html>

@@ -491,6 +491,57 @@ function handleContact(request, response) {
     });
 }
 
+async function handleGoogleAuth(request, response) {
+  try {
+    const payload = await readJsonBody(request);
+    const { credential } = payload || {};
+    if (!credential) {
+      safeJson(response, 400, { success: false, error: "Missing Google credential." });
+      return;
+    }
+
+    // 1. Verify token with Google's tokeninfo API
+    const verifyRes = await fetch(`https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(credential)}`);
+    if (!verifyRes.ok) {
+      safeJson(response, 401, { success: false, error: "Invalid Google token." });
+      return;
+    }
+
+    const tokenInfo = await verifyRes.json();
+    const email = tokenInfo.email?.toLowerCase();
+    const firstName = tokenInfo.given_name || tokenInfo.name || "User";
+    const lastName = tokenInfo.family_name || "";
+    const name = tokenInfo.name || `${firstName} ${lastName}`.trim();
+    const picture = tokenInfo.picture || "";
+
+    // 2. Generate session token
+    const tokenData = {
+      userId: tokenInfo.sub || `usr_${Date.now()}`,
+      email,
+      name,
+      picture,
+      exp: Date.now() + 7 * 24 * 60 * 60 * 1000
+    };
+    const sessionToken = Buffer.from(JSON.stringify(tokenData)).toString("base64url");
+
+    safeJson(response, 200, {
+      success: true,
+      token: sessionToken,
+      user: {
+        id: tokenData.userId,
+        email,
+        firstName,
+        lastName,
+        name,
+        picture
+      }
+    });
+  } catch (err) {
+    console.error("Google Auth Error:", err);
+    safeJson(response, 500, { success: false, error: "Authentication service error." });
+  }
+}
+
 const server = http.createServer((request, response) => {
   const url = new URL(request.url, `http://${request.headers.host}`);
   const pageRoutes = new Map([
@@ -499,7 +550,9 @@ const server = http.createServer((request, response) => {
     ["/predict", "predict.html"],
     ["/results", "results.html"],
     ["/developer", "developer.html"],
-    ["/contact", "contact.html"]
+    ["/contact", "contact.html"],
+    ["/login", "login.html"],
+    ["/signin", "login.html"]
   ]);
 
   if (request.method === "GET" && url.pathname === "/api/symptoms") {
@@ -515,6 +568,46 @@ const server = http.createServer((request, response) => {
   if (request.method === "POST" && url.pathname === "/api/contact") {
     handleContact(request, response);
     return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/api/auth/google") {
+    handleGoogleAuth(request, response);
+    return;
+  }
+
+  if (url.pathname === "/api/auth/config") {
+    if (request.method === "GET") {
+      safeJson(response, 200, {
+        googleClientId: process.env.GOOGLE_CLIENT_ID || ""
+      });
+      return;
+    }
+    if (request.method === "POST") {
+      (async () => {
+        try {
+          const payload = await readJsonBody(request);
+          const { googleClientId } = payload || {};
+          if (googleClientId && typeof googleClientId === "string") {
+            const cleanId = googleClientId.trim();
+            process.env.GOOGLE_CLIENT_ID = cleanId;
+            const envPath = path.join(ROOT, ".env");
+            let content = fs.existsSync(envPath) ? fs.readFileSync(envPath, "utf8") : "";
+            if (/^GOOGLE_CLIENT_ID=/m.test(content)) {
+              content = content.replace(/^GOOGLE_CLIENT_ID=.*$/m, `GOOGLE_CLIENT_ID=${cleanId}`);
+            } else {
+              content = (content ? content.trimEnd() + "\n" : "") + `GOOGLE_CLIENT_ID=${cleanId}\n`;
+            }
+            fs.writeFileSync(envPath, content, "utf8");
+            safeJson(response, 200, { success: true, googleClientId: cleanId });
+            return;
+          }
+          safeJson(response, 400, { success: false, error: "Invalid client ID" });
+        } catch (err) {
+          safeJson(response, 500, { success: false, error: "Failed to save client ID" });
+        }
+      })();
+      return;
+    }
   }
 
   if (request.method === "GET" && pageRoutes.has(url.pathname)) {

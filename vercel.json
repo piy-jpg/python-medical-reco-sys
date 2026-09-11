@@ -1,7 +1,7 @@
 {
   "cleanUrls": false,
   "functions": {
-    "api/*.js": {
+    "api/**/*.js": {
       "includeFiles": "datasets/archive/**"
     }
   },
@@ -25,6 +25,14 @@
     {
       "source": "/contact",
       "destination": "/contact.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/login.html"
+    },
+    {
+      "source": "/signin",
+      "destination": "/login.html"
     }
   ]
 }

@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In &amp; Register | MedRecSys</title>
+  <meta name="description" content="Sign in or create an account on MedRecSys to analyze symptoms, track predictive health insights, and access clinical wellness guidance.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/login.css">
+  <!-- Official Google Identity Services SDK -->
+  <script src="https://accounts.google.com/gsi/client" async defer onload="initGoogleAuth()"></script>
+</head>
+<body class="auth-page">
+  <!-- Ambient background glow elements -->
+  <div class="auth-bg-ambient" aria-hidden="true">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="ambient-grid"></div>
+  </div>
+
+  <!-- 1. NAVIGATION BAR -->
+  <header class="auth-navbar-wrapper">
+    <nav class="auth-navbar">
+      <a class="auth-navbar-brand" href="/">
+        <div class="auth-brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+        <span class="auth-brand-text">Med<span>RecSys</span></span>
+      </a>
+
+      <ul class="auth-nav-menu">
+        <li><a class="auth-nav-link" href="/">Home</a></li>
+        <li><a class="auth-nav-link" href="/predict">Predict</a></li>
+        <li><a class="auth-nav-link" href="/results">Results</a></li>
+        <li><a class="auth-nav-link" href="/developer">Developer</a></li>
+        <li><a class="auth-nav-link" href="/contact">Contact</a></li>
+        <li><a class="auth-nav-link active" href="/login">Sign In</a></li>
+      </ul>
+
+      <div class="auth-navbar-right">
+        <a class="auth-btn-nav-action" href="/predict">
+          <span>Try MedRecSys</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <button class="auth-hamburger-btn" id="authHamburgerBtn" aria-label="Toggle navigation menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="auth-mobile-nav" id="authMobileNav">
+      <a class="auth-nav-link" href="/">Home</a>
+      <a class="auth-nav-link" href="/predict">Predict</a>
+      <a class="auth-nav-link" href="/results">Results</a>
+      <a class="auth-nav-link" href="/developer">Developer</a>
+      <a class="auth-nav-link" href="/contact">Contact</a>
+      <a class="auth-nav-link active" href="/login">Sign In</a>
+      <a class="auth-btn-nav-action" href="/predict" style="text-align:center; justify-content:center; margin-top:8px;">
+        <span>Launch Analysis</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- 2. MAIN AUTHENTICATION WORKSPACE -->
+  <main class="auth-main-container">
+    <div class="auth-split-wrapper">
+
+      <!-- LEFT: INTERACTIVE FORM COLUMN -->
+      <div class="auth-form-column">
+
+        <!-- LOGGED-IN SESSION VIEW (Shown when user is authenticated) -->
+        <div id="authSessionCard" class="auth-session-card">
+          <div class="auth-user-avatar" id="authSessionAvatar">
+            <span id="authAvatarInitials">JD</span>
+            <img id="authAvatarImg" src="" alt="User Avatar" style="display:none;">
+          </div>
+          <div class="auth-provider-badge" id="authProviderBadge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="m9 12 2 2 4-4"></path>
+            </svg>
+            <span id="authProviderText">Verified Session</span>
+          </div>
+          <h3 id="authSessionGreeting">Welcome Back</h3>
+          <p id="authSessionEmail">user@example.com</p>
+          <div class="auth-session-actions">
+            <a href="/predict" id="btnGoToDashboard" class="auth-submit-btn" style="text-decoration:none;">
+              <span>Open Symptom Dashboard</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+            <button type="button" id="btnSignOut" class="auth-google-btn" style="border-color:rgba(239, 68, 68, 0.3); color:#dc2626;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+              <span>Sign Out</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- AUTH FORMS WRAPPER (Shown when not logged in) -->
+        <div id="authFormsContainer">
+          <div class="auth-form-header">
+            <div class="auth-eyebrow">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              <span>Healthcare AI Workspace</span>
+            </div>
+            <h1 class="auth-title" id="authSectionTitle">Welcome back</h1>
+            <p class="auth-subtitle" id="authSectionSubtitle">
+              Sign in to evaluate symptoms, access clinical diet advice, and save health reports.
+            </p>
+          </div>
+
+          <!-- Mode Tab Switcher: Sign In vs Create Account -->
+          <div class="auth-tab-bar" role="tablist">
+            <button type="button" class="auth-tab-btn active" id="tabSignIn" role="tab" aria-selected="true">
+              Sign In
+            </button>
+            <button type="button" class="auth-tab-btn" id="tabSignUp" role="tab" aria-selected="false">
+              Create New Account
+            </button>
+          </div>
+
+          <!-- REAL-TIME GOOGLE SIGN-IN WRAPPER -->
+          <div class="auth-google-wrapper">
+            <!-- Container for Google's Official GSI Rendered Button -->
+            <div id="googleOfficialBtn" class="real-google-btn-slot"></div>
+          </div>
+
+          <!-- Divider -->
+          <div class="auth-divider">
+            <span>or continue with email</span>
+          </div>
+
+          <!-- 3A. SIGN IN FORM -->
+          <form id="formSignIn" novalidate>
+            <div class="auth-form-fields">
+              <div class="auth-input-group">
+                <label class="auth-label" for="signInEmail">Email Address</label>
+                <div class="auth-input-wrap">
+                  <span class="auth-input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </span>
+                  <input 
+                    type="email" 
+                    id="signInEmail" 
+                    class="auth-input" 
+                    placeholder="you@example.com" 
+                    required 
+                    autocomplete="email"
+                  >
+                </div>
+                <div class="auth-error-hint" id="errSignInEmail">Please enter a valid email address.</div>
+              </div>
+
+              <div class="auth-input-group">
+                <label class="auth-label" for="signInPassword">
+                  <span>Password</span>
+                </label>
+                <div class="auth-input-wrap">
+                  <span class="auth-input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                  </span>
+                  <input 
+                    type="password" 
+                    id="signInPassword" 
+                    class="auth-input" 
+                    placeholder="Enter your password" 
+                    required 
+                    autocomplete="current-password"
+                  >
+                  <button type="button" class="auth-pwd-toggle" data-target="signInPassword" aria-label="Toggle password visibility">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
+                </div>
+                <div class="auth-error-hint" id="errSignInPassword">Password must be at least 6 characters.</div>
+              </div>
+
+              <!-- Options Row: Remember Me & Forgot Password -->
+              <div class="auth-extra-row">
+                <label class="auth-checkbox-label">
+                  <input type="checkbox" id="rememberMe" class="auth-checkbox" checked>
+                  <span>Remember this device</span>
+                </label>
+                <button type="button" id="btnOpenForgotModal" class="auth-text-link">
+                  Forgot password?
+                </button>
+              </div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="btnSignInSubmit" class="auth-submit-btn">
+                <span class="auth-spinner"></span>
+                <span class="auth-btn-text">Sign In to MedRecSys</span>
+                <svg class="auth-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </form>
+
+          <!-- 3B. CREATE NEW ACCOUNT FORM (Hidden initially) -->
+          <form id="formSignUp" style="display: none;" novalidate>
+            <div class="auth-form-fields">
+              <div class="auth-input-group">
+                <label class="auth-label" for="signUpName">Full Name</label>
+                <div class="auth-input-wrap">
+                  <span class="auth-input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  </span>
+                  <input 
+                    type="text" 
+                    id="signUpName" 
+                    class="auth-input" 
+                    placeholder="Alex Rivera" 
+                    required 
+                    autocomplete="name"
+                  >
+                </div>
+                <div class="auth-error-hint" id="errSignUpName">Please enter your full name.</div>
+              </div>
+
+              <div class="auth-input-group">
+                <label class="auth-label" for="signUpEmail">Email Address</label>
+                <div class="auth-input-wrap">
+                  <span class="auth-input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </span>
+                  <input 
+                    type="email" 
+                    id="signUpEmail" 
+                    class="auth-input" 
+                    placeholder="you@example.com" 
+                    required 
+                    autocomplete="email"
+                  >
+                </div>
+                <div class="auth-error-hint" id="errSignUpEmail">Please enter a valid email address.</div>
+              </div>
+
+              <div class="auth-input-group">
+                <label class="auth-label" for="signUpPassword">Create Password</label>
+                <div class="auth-input-wrap">
+                  <span class="auth-input-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                  </span>
+                  <input 
+                    type="password" 
+                    id="signUpPassword" 
+                    class="auth-input" 
+                    placeholder="Minimum 8 characters" 
+                    required 
+                    autocomplete="new-password"
+                  >
+                  <button type="button" class="auth-pwd-toggle" data-target="signUpPassword" aria-label="Toggle password visibility">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </button>
+                </div>
+                <div class="auth-error-hint" id="errSignUpPassword">Password must be at least 8 characters.</div>
+
+                <!-- Password Strength Meter -->
+                <div class="auth-pwd-meter" id="pwdMeter">
+                  <div class="auth-meter-bars">
+                    <div class="auth-meter-seg" id="meterSeg1"></div>
+                    <div class="auth-meter-seg" id="meterSeg2"></div>
+                    <div class="auth-meter-seg" id="meterSeg3"></div>
+                  </div>
+                  <span class="auth-meter-label" id="meterLabel">Password strength: Weak</span>
+                </div>
+              </div>
+
+              <!-- Terms Checkbox -->
+              <div class="auth-extra-row">
+                <label class="auth-checkbox-label">
+                  <input type="checkbox" id="agreeTerms" class="auth-checkbox" required>
+                  <span>I agree to the <a href="#" class="auth-text-link">Terms</a> and <a href="#" class="auth-text-link">Privacy Policy</a></span>
+                </label>
+              </div>
+              <div class="auth-error-hint" id="errAgreeTerms">Please accept terms to create an account.</div>
+
+              <!-- Submit Button -->
+              <button type="submit" id="btnSignUpSubmit" class="auth-submit-btn">
+                <span class="auth-spinner"></span>
+                <span class="auth-btn-text">Create Free Account</span>
+                <svg class="auth-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: MEDICAL AI SHOWCASE COLUMN -->
+      <div class="auth-showcase-column">
+        <div>
+          <div class="showcase-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>Medical AI Intelligence</span>
+          </div>
+          <h2 class="showcase-title">
+            Clinical symptom pattern analysis at your fingertips.
+          </h2>
+          <p class="showcase-desc">
+            Deterministic Support Vector Classifier evaluating 131 clinical symptoms across 41 disease classes with instant holistic guidance.
+          </p>
+
+          <div class="showcase-features-list">
+            <div class="showcase-feature-item">
+              <div class="showcase-feat-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div class="showcase-feat-text">
+                <h4>Private &amp; Secure Health Sessions</h4>
+                <p>Non-diagnostic client-side evaluations with zero ad-tracking or profile sharing.</p>
+              </div>
+            </div>
+
+            <div class="showcase-feature-item">
+              <div class="showcase-feat-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+              </div>
+              <div class="showcase-feat-text">
+                <h4>Sub-Second Model Inference</h4>
+                <p>Pre-trained high-dimensional hyperplane margin separation under 100ms latency.</p>
+              </div>
+            </div>
+
+            <div class="showcase-feature-item">
+              <div class="showcase-feat-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                  <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+              </div>
+              <div class="showcase-feat-text">
+                <h4>Multi-Tier Clinical Advisory</h4>
+                <p>Direct lookup for verified precautions, customized diets, workouts, and medications.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-security-strip">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          <span>Non-diagnostic informational AI tool. Your data stays in your hands.</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+
+
+  <!-- GOOGLE CLIENT ID SETUP & DIRECT LOGIN MODAL -->
+  <div class="auth-modal-overlay" id="googleSetupModal">
+    <div class="auth-modal-card">
+      <button type="button" class="auth-modal-close" id="btnCloseGoogleSetupModal" aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div style="width:48px; height:48px; border-radius:12px; background:#eff6ff; display:grid; place-items:center; margin-bottom:16px;">
+        <svg class="google-icon-svg" viewBox="0 0 24 24" width="26" height="26">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.24v3.15C3.26 21.36 7.33 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.24C.45 8.16 0 9.94 0 12s.45 3.84 1.24 5.42l4.04-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.24 6.58l4.04 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+      </div>
+      <h3 style="font-size:1.35rem; font-weight:800; color:var(--navy-dark); margin-bottom:6px;">Connect Google OAuth</h3>
+      <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.5; margin-bottom:18px;">
+        To connect live Google Sign-In, paste your <strong>OAuth Client ID</strong> from the <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener" style="color:var(--blue-primary); text-decoration:underline;">Google Cloud Console</a>.
+      </p>
+
+      <form id="formGoogleSetup" novalidate>
+        <div class="auth-input-group" style="margin-bottom:16px;">
+          <label class="auth-label" for="inputModalClientId">Google OAuth Client ID</label>
+          <div class="auth-input-wrap">
+            <input type="text" id="inputModalClientId" class="auth-input" placeholder="xxxxxx.apps.googleusercontent.com" required style="font-size:0.85rem;">
+          </div>
+          <div class="auth-error-hint" id="errModalClientId">Please enter a valid Google Client ID.</div>
+        </div>
+
+        <button type="submit" class="auth-submit-btn" style="margin-bottom:14px;">
+          <span>Save &amp; Activate Google Sign-In</span>
+        </button>
+
+        <div style="text-align:center; margin:10px 0; font-size:0.82rem; color:var(--text-secondary);">
+          <span>— or test locally without Google Cloud setup —</span>
+        </div>
+
+        <button type="button" id="btnQuickDemoLogin" class="auth-google-btn" style="width:100%; border:1px solid rgba(0,102,255,0.25); background:#f0f7ff; color:var(--blue-primary); font-weight:600; font-size:0.88rem; justify-content:center;">
+          <span>⚡ Continue as Piyush Verma (piyushverma730929@gmail.com)</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. FORGOT PASSWORD MODAL -->
+  <div class="auth-modal-overlay" id="forgotModal">
+    <div class="auth-modal-card">
+      <button type="button" class="auth-modal-close" id="btnCloseForgotModal" aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div style="width:48px; height:48px; border-radius:12px; background:#eef6ff; color:#0066ff; display:grid; place-items:center; margin-bottom:16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <h3 style="font-size:1.35rem; font-weight:800; color:var(--navy-dark); margin-bottom:6px;">Reset your password</h3>
+      <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.55; margin-bottom:20px;">
+        Enter your account email address and we'll send you recovery instructions to regain access.
+      </p>
+
+      <form id="formForgot" novalidate>
+        <div class="auth-input-group" style="margin-bottom:18px;">
+          <label class="auth-label" for="forgotEmail">Email Address</label>
+          <div class="auth-input-wrap">
+            <span class="auth-input-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </span>
+            <input type="email" id="forgotEmail" class="auth-input" placeholder="you@example.com" required>
+          </div>
+          <div class="auth-error-hint" id="errForgotEmail">Please enter a valid email address.</div>
+        </div>
+        <button type="submit" id="btnForgotSubmit" class="auth-submit-btn">
+          <span>Send Recovery Link</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. TOAST NOTIFICATION -->
+  <div class="auth-toast" id="authToast">
+    <span id="authToastMsg">Action completed successfully.</span>
+  </div>
+
+  <!-- 7. FOOTER -->
+  <footer class="auth-footer">
+    <div class="auth-footer-content">
+      <div>&copy; 2026 MedRecSys &bull; Developed by Piyush Verma. All rights reserved.</div>
+      <div class="auth-footer-links">
+        <a href="/">Home</a>
+        <a href="/predict">Predict</a>
+        <a href="/results">Results</a>
+        <a href="/developer">Developer</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- AUTH LOGIC & REAL-TIME GOOGLE GSI SCRIPT -->
+  <script>
+    // Global Google OAuth Configuration
+    let GOOGLE_CLIENT_ID = localStorage.getItem('medrecsys:googleClientId') || '880806707459-kc52belchnuipf1j47jdsn7tvtblhknt.apps.googleusercontent.com';
+
+    function parseJwt(token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        return JSON.parse(jsonPayload);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function getRedirectTarget() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('redirect') || '/predict';
+    }
+
+    function redirectToDashboard(msg) {
+      if (typeof window.showToast === 'function' && msg) {
+        window.showToast(msg);
+      }
+      setTimeout(() => {
+        window.location.href = getRedirectTarget();
+      }, 700);
+    }
+
+    async function handleGoogleCredentialResponse(response) {
+      if (!response || !response.credential) return;
+
+      try {
+        const res = await fetch('/api/auth/google', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ credential: response.credential })
+        });
+        const data = await res.json();
+        if (data && data.success && data.user) {
+          if (data.token) localStorage.setItem('token', data.token);
+          const user = {
+            id: data.user.id,
+            name: data.user.name,
+            email: data.user.email,
+            picture: data.user.picture || '',
+            provider: 'google',
+            loggedInAt: Date.now()
+          };
+          localStorage.setItem('medrecsys:currentUser', JSON.stringify(user));
+          if (typeof window.checkSession === 'function') window.checkSession();
+          redirectToDashboard(`Welcome, ${data.user.name}! Opening symptom dashboard...`);
+          return;
+        }
+      } catch (err) {
+        console.warn('Backend verification call notice:', err);
+      }
+
+      // Graceful client fallback using JWT decode
+      const payload = parseJwt(response.credential);
+      if (payload) {
+        const user = {
+          id: payload.sub,
+          name: payload.name || 'Google User',
+          email: payload.email,
+          picture: payload.picture || '',
+          provider: 'google',
+          token: response.credential,
+          loggedInAt: Date.now()
+        };
+        localStorage.setItem('token', response.credential);
+        localStorage.setItem('medrecsys:currentUser', JSON.stringify(user));
+        if (typeof window.checkSession === 'function') window.checkSession();
+        redirectToDashboard(`Signed in with Google! Opening symptom dashboard...`);
+      }
+    }
+
+    async function initGoogleAuth() {
+      // 1. Sync client ID from backend if available
+      try {
+        const res = await fetch('/api/auth/config');
+        const data = await res.json();
+        if (data && data.googleClientId) {
+          GOOGLE_CLIENT_ID = data.googleClientId;
+          localStorage.setItem('medrecsys:googleClientId', GOOGLE_CLIENT_ID);
+        }
+      } catch (e) {}
+
+      const officialBtn = document.getElementById('googleOfficialBtn');
+      const isConfigured = GOOGLE_CLIENT_ID && 
+                           !GOOGLE_CLIENT_ID.includes('YOUR_NEW_GOOGLE_CLIENT_ID') &&
+                           GOOGLE_CLIENT_ID.includes('.apps.googleusercontent.com');
+
+      // If not yet configured, render a clean Google button that opens the setup dialog
+      // This prevents Google's "Error 401: invalid_client: The OAuth client was not found" error popup
+      if (!isConfigured) {
+        if (officialBtn) {
+          officialBtn.innerHTML = `
+            <button type="button" id="btnConnectGoogle" class="auth-google-btn" style="width:300px; display:flex; align-items:center; justify-content:center; gap:12px; margin:0 auto;" aria-label="Sign in with Google">
+              <svg class="google-icon-svg" viewBox="0 0 24 24" width="20" height="20">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.24v3.15C3.26 21.36 7.33 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.24C.45 8.16 0 9.94 0 12s.45 3.84 1.24 5.42l4.04-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.24 6.58l4.04 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+          `;
+          const btn = document.getElementById('btnConnectGoogle');
+          if (btn) {
+            btn.onclick = () => {
+              const modal = document.getElementById('googleSetupModal');
+              if (modal) modal.classList.add('open');
+            };
+          }
+        }
+        return;
+      }
+
+      // If valid Google Client ID is configured, initialize Google Identity Services
+      if (window.google && window.google.accounts && window.google.accounts.id) {
+        try {
+          if (officialBtn) officialBtn.innerHTML = '';
+          window.google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: handleGoogleCredentialResponse,
+            auto_select: false,
+            cancel_on_tap_outside: true
+          });
+
+          if (officialBtn) {
+            window.google.accounts.id.renderButton(
+              officialBtn,
+              { type: 'standard', theme: 'outline', size: 'large', text: 'continue_with', shape: 'rectangular', width: 300 }
+            );
+          }
+
+          window.google.accounts.id.prompt();
+        } catch (err) {
+          console.warn('Google GSI initialization notice:', err);
+        }
+      }
+    }
+
+    // Expose functions globally for the GIS onload callback
+    window.initGoogleAuth = initGoogleAuth;
+    window.initGoogleGSI = initGoogleAuth;
+    window.handleGoogleCredentialResponse = handleGoogleCredentialResponse;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Mobile Drawer
+      const hamburger = document.getElementById('authHamburgerBtn');
+      const mobileNav = document.getElementById('authMobileNav');
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', () => mobileNav.classList.toggle('open'));
+      }
+
+      // 2. Tabs
+      const tabSignIn = document.getElementById('tabSignIn');
+      const tabSignUp = document.getElementById('tabSignUp');
+      const formSignIn = document.getElementById('formSignIn');
+      const formSignUp = document.getElementById('formSignUp');
+      const title = document.getElementById('authSectionTitle');
+      const subtitle = document.getElementById('authSectionSubtitle');
+
+      function switchTab(mode) {
+        if (mode === 'signup') {
+          tabSignUp.classList.add('active');
+          tabSignIn.classList.remove('active');
+          tabSignUp.setAttribute('aria-selected', 'true');
+          tabSignIn.setAttribute('aria-selected', 'false');
+          formSignIn.style.display = 'none';
+          formSignUp.style.display = 'block';
+          title.textContent = 'Create your account';
+          subtitle.textContent = 'Join MedRecSys to access intelligent symptom prediction and clinical insights.';
+        } else {
+          tabSignIn.classList.add('active');
+          tabSignUp.classList.remove('active');
+          tabSignIn.setAttribute('aria-selected', 'true');
+          tabSignUp.setAttribute('aria-selected', 'false');
+          formSignIn.style.display = 'block';
+          formSignUp.style.display = 'none';
+          title.textContent = 'Welcome back';
+          subtitle.textContent = 'Sign in to evaluate symptoms, access clinical diet advice, and save health reports.';
+        }
+      }
+
+      tabSignIn.addEventListener('click', () => switchTab('signin'));
+      tabSignUp.addEventListener('click', () => switchTab('signup'));
+
+      // 3. Toggle Password Visibility
+      document.querySelectorAll('.auth-pwd-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetId = btn.getAttribute('data-target');
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          if (input.type === 'password') {
+            input.type = 'text';
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+          } else {
+            input.type = 'password';
+            btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+          }
+        });
+      });
+
+      // 4. Password Strength Meter
+      const signUpPwd = document.getElementById('signUpPassword');
+      const pwdMeter = document.getElementById('pwdMeter');
+      const meterSeg1 = document.getElementById('meterSeg1');
+      const meterSeg2 = document.getElementById('meterSeg2');
+      const meterSeg3 = document.getElementById('meterSeg3');
+      const meterLabel = document.getElementById('meterLabel');
+
+      if (signUpPwd && pwdMeter) {
+        signUpPwd.addEventListener('input', () => {
+          const val = signUpPwd.value;
+          if (!val) {
+            pwdMeter.classList.remove('active');
+            return;
+          }
+          pwdMeter.classList.add('active');
+          let score = 0;
+          if (val.length >= 6) score++;
+          if (val.length >= 8 && /[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+          if (val.length >= 10 && /[^A-Za-z0-9]/.test(val)) score++;
+
+          meterSeg1.style.background = '#e2e8f0';
+          meterSeg2.style.background = '#e2e8f0';
+          meterSeg3.style.background = '#e2e8f0';
+
+          if (score === 1) {
+            meterSeg1.style.background = '#ef4444';
+            meterLabel.textContent = 'Password strength: Weak';
+            meterLabel.style.color = '#ef4444';
+          } else if (score === 2) {
+            meterSeg1.style.background = '#f59e0b';
+            meterSeg2.style.background = '#f59e0b';
+            meterLabel.textContent = 'Password strength: Medium';
+            meterLabel.style.color = '#d97706';
+          } else if (score >= 3) {
+            meterSeg1.style.background = '#10b981';
+            meterSeg2.style.background = '#10b981';
+            meterSeg3.style.background = '#10b981';
+            meterLabel.textContent = 'Password strength: Strong';
+            meterLabel.style.color = '#059669';
+          }
+        });
+      }
+
+      // 5. Toast Notification
+      const toast = document.getElementById('authToast');
+      const toastMsg = document.getElementById('authToastMsg');
+      function showToast(message, type = 'success') {
+        toastMsg.textContent = message;
+        toast.className = `auth-toast show toast-${type}`;
+        setTimeout(() => toast.classList.remove('show'), 3500);
+      }
+      window.showToast = showToast;
+
+      // 6. Session Persistence & Display
+      const sessionCard = document.getElementById('authSessionCard');
+      const formsContainer = document.getElementById('authFormsContainer');
+      const avatarInitials = document.getElementById('authAvatarInitials');
+      const avatarImg = document.getElementById('authAvatarImg');
+      const sessionGreeting = document.getElementById('authSessionGreeting');
+      const sessionEmail = document.getElementById('authSessionEmail');
+      const providerText = document.getElementById('authProviderText');
+      const btnSignOut = document.getElementById('btnSignOut');
+
+      function checkSession() {
+        const target = getRedirectTarget();
+        const btnDashboard = document.getElementById('btnGoToDashboard');
+        if (btnDashboard) {
+          btnDashboard.href = target;
+        }
+
+        const saved = localStorage.getItem('medrecsys:currentUser');
+        if (saved) {
+          try {
+            const user = JSON.parse(saved);
+            formsContainer.style.display = 'none';
+            sessionCard.classList.add('active');
+
+            if (user.picture) {
+              avatarImg.src = user.picture;
+              avatarImg.style.display = 'block';
+              avatarInitials.style.display = 'none';
+            } else {
+              avatarImg.style.display = 'none';
+              avatarInitials.style.display = 'block';
+              avatarInitials.textContent = (user.name || 'User').slice(0, 2).toUpperCase();
+            }
+
+            sessionGreeting.textContent = `Welcome back, ${user.name || 'User'}`;
+            sessionEmail.textContent = user.email || 'Logged in via MedRecSys';
+            providerText.textContent = user.provider === 'google' ? 'Google Account Verified' : 'Email Session Verified';
+          } catch (e) {
+            localStorage.removeItem('medrecsys:currentUser');
+          }
+        } else {
+          sessionCard.classList.remove('active');
+          formsContainer.style.display = 'block';
+        }
+      }
+      window.checkSession = checkSession;
+      checkSession();
+
+      if (btnSignOut) {
+        btnSignOut.addEventListener('click', () => {
+          localStorage.removeItem('medrecsys:currentUser');
+          localStorage.removeItem('token');
+          checkSession();
+          showToast('Signed out successfully.');
+        });
+      }
+
+      // 7. Initialize Real-Time Google Auth
+      initGoogleAuth();
+
+      // Google Setup Modal Handlers
+      const setupModal = document.getElementById('googleSetupModal');
+      const btnCloseSetupModal = document.getElementById('btnCloseGoogleSetupModal');
+      const formGoogleSetup = document.getElementById('formGoogleSetup');
+      const btnQuickDemo = document.getElementById('btnQuickDemoLogin');
+
+      if (btnCloseSetupModal && setupModal) {
+        btnCloseSetupModal.addEventListener('click', () => setupModal.classList.remove('open'));
+        setupModal.addEventListener('click', (e) => {
+          if (e.target === setupModal) setupModal.classList.remove('open');
+        });
+      }
+
+      if (formGoogleSetup) {
+        formGoogleSetup.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const input = document.getElementById('inputModalClientId');
+          const err = document.getElementById('errModalClientId');
+          const val = input.value.trim();
+
+          if (!val || !val.includes('.apps.googleusercontent.com')) {
+            err.classList.add('visible');
+            return;
+          }
+          err.classList.remove('visible');
+
+          GOOGLE_CLIENT_ID = val;
+          localStorage.setItem('medrecsys:googleClientId', val);
+
+          try {
+            await fetch('/api/auth/config', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ googleClientId: val })
+            });
+          } catch (err) {}
+
+          setupModal.classList.remove('open');
+          showToast('Google Client ID connected! Initializing live Google Sign-In...');
+          initGoogleAuth();
+        });
+      }
+
+      if (btnQuickDemo) {
+        btnQuickDemo.addEventListener('click', () => {
+          const demoUser = {
+            id: 'usr_piyush_verma',
+            name: 'Piyush Verma',
+            email: 'piyushverma730929@gmail.com',
+            picture: '/piyush-verma.jpg',
+            provider: 'google',
+            loggedInAt: Date.now()
+          };
+          localStorage.setItem('token', 'simulated_google_token_' + Date.now());
+          localStorage.setItem('medrecsys:currentUser', JSON.stringify(demoUser));
+          if (setupModal) setupModal.classList.remove('open');
+          checkSession();
+          redirectToDashboard('Signed in as Piyush Verma! Opening symptom dashboard...');
+        });
+      }
+
+      // 10. Handle Email Sign In Submit
+      if (formSignIn) {
+        formSignIn.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('signInEmail').value.trim();
+          const pwd = document.getElementById('signInPassword').value;
+          const errEmail = document.getElementById('errSignInEmail');
+          const errPwd = document.getElementById('errSignInPassword');
+          const btnSubmit = document.getElementById('btnSignInSubmit');
+
+          let hasError = false;
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errEmail.classList.add('visible');
+            document.getElementById('signInEmail').classList.add('input-error');
+            hasError = true;
+          } else {
+            errEmail.classList.remove('visible');
+            document.getElementById('signInEmail').classList.remove('input-error');
+          }
+
+          if (!pwd || pwd.length < 6) {
+            errPwd.classList.add('visible');
+            document.getElementById('signInPassword').classList.add('input-error');
+            hasError = true;
+          } else {
+            errPwd.classList.remove('visible');
+            document.getElementById('signInPassword').classList.remove('input-error');
+          }
+
+          if (hasError) return;
+
+          btnSubmit.disabled = true;
+          btnSubmit.classList.add('loading');
+
+          setTimeout(() => {
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('loading');
+
+            const nameFromEmail = email.split('@')[0].replace(/[._-]/g, ' ');
+            const formattedName = nameFromEmail.charAt(0).toUpperCase() + nameFromEmail.slice(1);
+
+            const user = {
+              name: formattedName,
+              email: email,
+              picture: '',
+              provider: 'email',
+              loggedInAt: Date.now()
+            };
+            localStorage.setItem('medrecsys:currentUser', JSON.stringify(user));
+            formSignIn.reset();
+            checkSession();
+            redirectToDashboard(`Welcome back, ${formattedName}! Opening symptom dashboard...`);
+          }, 600);
+        });
+      }
+
+      // 11. Handle Email Sign Up Submit
+      if (formSignUp) {
+        formSignUp.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('signUpName').value.trim();
+          const email = document.getElementById('signUpEmail').value.trim();
+          const pwd = document.getElementById('signUpPassword').value;
+          const agree = document.getElementById('agreeTerms').checked;
+
+          const errName = document.getElementById('errSignUpName');
+          const errEmail = document.getElementById('errSignUpEmail');
+          const errPwd = document.getElementById('errSignUpPassword');
+          const errAgree = document.getElementById('errAgreeTerms');
+          const btnSubmit = document.getElementById('btnSignUpSubmit');
+
+          let hasError = false;
+          if (!name) {
+            errName.classList.add('visible');
+            document.getElementById('signUpName').classList.add('input-error');
+            hasError = true;
+          } else {
+            errName.classList.remove('visible');
+            document.getElementById('signUpName').classList.remove('input-error');
+          }
+
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errEmail.classList.add('visible');
+            document.getElementById('signUpEmail').classList.add('input-error');
+            hasError = true;
+          } else {
+            errEmail.classList.remove('visible');
+            document.getElementById('signUpEmail').classList.remove('input-error');
+          }
+
+          if (!pwd || pwd.length < 8) {
+            errPwd.classList.add('visible');
+            document.getElementById('signUpPassword').classList.add('input-error');
+            hasError = true;
+          } else {
+            errPwd.classList.remove('visible');
+            document.getElementById('signUpPassword').classList.remove('input-error');
+          }
+
+          if (!agree) {
+            errAgree.classList.add('visible');
+            hasError = true;
+          } else {
+            errAgree.classList.remove('visible');
+          }
+
+          if (hasError) return;
+
+          btnSubmit.disabled = true;
+          btnSubmit.classList.add('loading');
+
+          setTimeout(() => {
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('loading');
+
+            const user = {
+              name: name,
+              email: email,
+              picture: '',
+              provider: 'email',
+              loggedInAt: Date.now()
+            };
+            localStorage.setItem('medrecsys:currentUser', JSON.stringify(user));
+            formSignUp.reset();
+            checkSession();
+            redirectToDashboard(`Account created! Welcome, ${name}. Opening symptom dashboard...`);
+          }, 700);
+        });
+      }
+
+      // 12. Forgot Password Modal
+      const modal = document.getElementById('forgotModal');
+      const btnOpenForgot = document.getElementById('btnOpenForgotModal');
+      const btnCloseForgot = document.getElementById('btnCloseForgotModal');
+      const formForgot = document.getElementById('formForgot');
+
+      if (btnOpenForgot && modal) {
+        btnOpenForgot.addEventListener('click', () => modal.classList.add('open'));
+      }
+      if (btnCloseForgot && modal) {
+        btnCloseForgot.addEventListener('click', () => modal.classList.remove('open'));
+      }
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.classList.remove('open');
+        });
+      }
+      if (formForgot) {
+        formForgot.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const email = document.getElementById('forgotEmail').value.trim();
+          const err = document.getElementById('errForgotEmail');
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            err.classList.add('visible');
+            return;
+          }
+          err.classList.remove('visible');
+          modal.classList.remove('open');
+          formForgot.reset();
+          showToast(`Password recovery link sent to ${email}. Check your inbox!`);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

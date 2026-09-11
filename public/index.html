@@ -3,115 +3,673 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MedRecSys | Home</title>
+  <title>MedRecSys | AI-Powered Healthcare & Symptom Analysis</title>
+  <meta name="description" content="MedRecSys uses intelligent symptom analysis to help you understand possible health conditions and make informed decisions about your next steps.">
+  
+  <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Dedicated Home Page Stylesheet -->
+  <link rel="stylesheet" href="/home.css">
 </head>
-<body>
-  <div class="bg-shapes" aria-hidden="true">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
+<body class="home-page">
+
+  <!-- Ambient Glow Background -->
+  <div class="home-bg-ambient" aria-hidden="true">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="ambient-grid"></div>
   </div>
 
-  <nav class="navbar">
-    <div class="nav-container">
-      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
-      <div class="nav-links">
-        <a class="nav-link active" href="/">Home</a>
-        <a class="nav-link" href="/predict">Predict</a>
-        <a class="nav-link" href="/results">Results</a>
-        <a class="nav-link" href="/developer">Developer</a>
-        <a class="nav-link" href="/contact">Contact</a>
+  <!-- 1. NAVBAR -->
+  <header class="home-navbar-wrapper">
+    <nav class="home-navbar" aria-label="Main Navigation">
+      <!-- Logo -->
+      <a href="/" class="home-navbar-brand">
+        <div class="home-brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M2 12h20"></path>
+            <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+          </svg>
+        </div>
+        <span class="home-brand-text">Med<span>RecSys</span></span>
+      </a>
+
+      <!-- Desktop Navigation Menu -->
+      <ul class="home-nav-menu">
+        <li><a class="home-nav-link active" href="/">Home</a></li>
+        <li><a class="home-nav-link" href="/predict">Predict</a></li>
+        <li><a class="home-nav-link" href="/results">Results</a></li>
+        <li><a class="home-nav-link" href="#how-it-works">How It Works</a></li>
+        <li><a class="home-nav-link" href="/developer">Developer</a></li>
+        <li><a class="home-nav-link" href="/contact">Contact</a></li>
+        <li><a class="home-nav-link" href="/login">Sign In</a></li>
+      </ul>
+
+      <!-- Desktop Right CTA -->
+      <div class="home-navbar-right">
+        <a href="/predict" class="home-btn-nav-cta">
+          <span>Start Prediction</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="home-hamburger-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Dropdown Nav -->
+      <div class="home-mobile-nav" id="mobile-menu">
+        <a class="home-nav-link active" href="/">Home</a>
+        <a class="home-nav-link" href="/predict">Predict</a>
+        <a class="home-nav-link" href="/results">Results</a>
+        <a class="home-nav-link" href="#how-it-works">How It Works</a>
+        <a class="home-nav-link" href="/developer">Developer</a>
+        <a class="home-nav-link" href="/contact">Contact</a>
+        <a class="home-nav-link" href="/login">Sign In</a>
+        <a href="/predict" class="home-btn-nav-cta">Start Prediction →</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 2. HERO SECTION -->
+    <section class="home-hero-section">
+      <div class="home-container">
+        <div class="home-hero-grid">
+          <!-- Left Column -->
+          <div class="home-hero-left">
+            <div class="home-badge-ai">
+              <span class="home-badge-ai-dot"></span>
+              <span class="home-badge-sparkle">✦</span>
+              <span>AI-Powered Symptom Intelligence</span>
+              <span class="home-badge-pill">Model v2.4</span>
+            </div>
+
+            <h1 class="home-hero-heading">
+              Understand your symptoms.
+              <span class="home-hero-gradient-text">Get intelligent health insights.</span>
+            </h1>
+
+            <p class="home-hero-description">
+              MedRecSys uses intelligent symptom analysis to help you understand possible health conditions and make more informed decisions about your next step.
+            </p>
+
+            <div class="home-hero-actions-wrapper">
+              <div class="home-hero-buttons">
+                <a href="/predict" class="home-btn-primary">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                  <span>Start Prediction</span>
+                  <span class="arrow-icon">→</span>
+                </a>
+                <a href="#how-it-works" class="home-btn-secondary">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                  </svg>
+                  <span>How It Works</span>
+                </a>
+              </div>
+              <div class="home-hero-sub-action">
+                <span class="home-sub-pulse"></span>
+                <span>No account required &bull; Instant evaluation &bull; 131 symptoms</span>
+              </div>
+            </div>
+
+            <!-- Enhanced Trust & Value Micro-Pills -->
+            <div class="home-trust-pills-row">
+              <div class="home-trust-pill">
+                <div class="home-trust-pill-icon icon-ai">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                  </svg>
+                </div>
+                <span>AI-assisted</span>
+              </div>
+
+              <div class="home-trust-pill">
+                <div class="home-trust-pill-icon icon-fast">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                </div>
+                <span>Fast (~18ms)</span>
+              </div>
+
+              <div class="home-trust-pill">
+                <div class="home-trust-pill-icon icon-simple">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </div>
+                <span>Simple</span>
+              </div>
+
+              <div class="home-trust-pill">
+                <div class="home-trust-pill-icon icon-info">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="m9 12 2 2 4-4"></path>
+                  </svg>
+                </div>
+                <span>Informational</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: AI Healthcare Dashboard Visual -->
+          <div class="home-hero-right">
+            <div class="home-ai-visual-card">
+              <!-- Top Header Bar -->
+              <div class="home-card-header-bar">
+                <div class="home-card-header-left">
+                  <span class="home-card-status-dot"></span>
+                  <span class="home-card-header-title">Diagnostic Neural Engine</span>
+                </div>
+                <span class="home-card-engine-tag">Model v2.4 Active</span>
+              </div>
+
+              <!-- Center Core: Heartbeat Pulse & Medical Icon -->
+              <div class="home-ai-core">
+                <div class="home-core-orb">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="4"></rect>
+                    <path d="M12 9v6M9 12h6"></path>
+                  </svg>
+                </div>
+
+                <!-- Heartbeat ECG Pulse Wave SVG -->
+                <div class="home-pulse-monitor">
+                  <svg class="home-pulse-svg" viewBox="0 0 400 90" preserveAspectRatio="none">
+                    <line x1="0" y1="45" x2="400" y2="45" stroke="rgba(255, 255, 255, 0.1)" stroke-width="1" stroke-dasharray="4 4"></line>
+                    <path class="pulse-line" d="M 0 45 L 80 45 L 95 45 L 105 15 L 115 75 L 125 35 L 135 55 L 145 45 L 230 45 L 245 45 L 255 10 L 265 80 L 275 30 L 285 55 L 295 45 L 400 45"></path>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Bottom Status Info Bar -->
+              <div style="display: flex; justify-content: space-between; align-items: center; color: #94a3b8; font-size: 0.78rem; z-index: 2; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px;">
+                <span>Pattern Matcher: Multi-Feature Matrix</span>
+                <span style="color: #38bdf8;">Latency: ~18ms</span>
+              </div>
+
+              <!-- Floating UI Card 1: Top Left -->
+              <div class="home-float-card card-top-left">
+                <div class="float-icon-box float-icon-blue">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </div>
+                <div class="float-card-content">
+                  <span class="float-card-label">Symptom Analysis</span>
+                  <span class="float-card-value">Analyzing symptoms<span class="scanning-spinner"></span></span>
+                </div>
+              </div>
+
+              <!-- Floating UI Card 2: Top Right -->
+              <div class="home-float-card card-top-right">
+                <div class="float-icon-box float-icon-green">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                  </svg>
+                </div>
+                <div class="float-card-content">
+                  <span class="float-card-label">AI Confidence</span>
+                  <span class="float-card-value" style="color: #10b981;">94% Match</span>
+                </div>
+              </div>
+
+              <!-- Floating UI Card 3: Bottom Left -->
+              <div class="home-float-card card-bottom-left">
+                <div class="float-icon-box float-icon-purple">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                </div>
+                <div class="float-card-content">
+                  <span class="float-card-label">Possible Conditions</span>
+                  <span class="float-card-value">3 detected</span>
+                </div>
+              </div>
+
+              <!-- Floating UI Card 4: Bottom Right -->
+              <div class="home-float-card card-bottom-right">
+                <div class="float-icon-box float-icon-cyan">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <polyline points="9 12 11 14 15 10"></polyline>
+                  </svg>
+                </div>
+                <div class="float-card-content">
+                  <span class="float-card-label">Health Insight</span>
+                  <span class="float-card-value">Review next steps</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TRUST / STATISTICS STRIP -->
+    <section class="home-stats-section">
+      <div class="home-container">
+        <div class="home-stats-bar">
+          <div class="home-stat-item">
+            <span class="home-stat-number">10K+</span>
+            <span class="home-stat-label">Predictions Analyzed</span>
+          </div>
+          <div class="home-stat-item">
+            <span class="home-stat-number">95%</span>
+            <span class="home-stat-label">Model Accuracy</span>
+          </div>
+          <div class="home-stat-item">
+            <span class="home-stat-number">24/7</span>
+            <span class="home-stat-label">Digital Assistance</span>
+          </div>
+          <div class="home-stat-item">
+            <span class="home-stat-number">3 sec</span>
+            <span class="home-stat-label">Average Analysis</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HOW MEDRECSYS WORKS -->
+    <section class="home-workflow-section" id="how-it-works">
+      <div class="home-container">
+        <div class="home-section-header">
+          <span class="home-section-eyebrow">Seamless Workflow</span>
+          <h2 class="home-section-title">Healthcare insights in three simple steps</h2>
+          <p class="home-section-subtitle">
+            From symptoms to understandable insights in a simple workflow.
+          </p>
+        </div>
+
+        <div class="home-workflow-grid">
+          <!-- Step 01 -->
+          <article class="home-workflow-card">
+            <div class="home-workflow-top">
+              <div class="home-workflow-icon-wrap" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                  <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                  <path d="M9 12h6M9 16h6"></path>
+                </svg>
+              </div>
+              <span class="home-workflow-step-num">01</span>
+            </div>
+            <h3>Enter Symptoms</h3>
+            <p>Describe the symptoms you are experiencing using our simple prediction interface.</p>
+          </article>
+
+          <!-- Step 02 -->
+          <article class="home-workflow-card">
+            <div class="home-workflow-top">
+              <div class="home-workflow-icon-wrap" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a8 8 0 0 0-8 8c0 3.5 2 6.5 5 7.7V20a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2.3c3-1.2 5-4.2 5-7.7a8 8 0 0 0-8-8z"></path>
+                  <line x1="9.5" y1="9" x2="9.5" y2="9.01"></line>
+                  <line x1="14.5" y1="9" x2="14.5" y2="9.01"></line>
+                  <path d="M9.5 13a3.5 3.5 0 0 0 5 0"></path>
+                </svg>
+              </div>
+              <span class="home-workflow-step-num">02</span>
+            </div>
+            <h3>AI Analysis</h3>
+            <p>Our prediction system analyzes the submitted symptoms and identifies possible health conditions.</p>
+          </article>
+
+          <!-- Step 03 -->
+          <article class="home-workflow-card">
+            <div class="home-workflow-top">
+              <div class="home-workflow-icon-wrap" aria-hidden="true">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <span class="home-workflow-step-num">03</span>
+            </div>
+            <h3>Review Results</h3>
+            <p>Review the generated results and understand the recommended next steps.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. PRODUCT PREVIEW -->
+    <section class="home-preview-section">
+      <div class="home-container">
+        <div class="home-section-header">
+          <span class="home-section-eyebrow">Interactive Demo</span>
+          <h2 class="home-section-title">See MedRecSys in action</h2>
+          <p class="home-section-subtitle">
+            Experience our streamlined diagnostic interface designed for speed, clarity, and ease of use.
+          </p>
+        </div>
+
+        <div class="home-preview-outer-shell">
+          <!-- Mockup Browser Bar -->
+          <div class="home-preview-browser-bar">
+            <div class="home-browser-dots">
+              <span class="home-browser-dot home-dot-red"></span>
+              <span class="home-browser-dot home-dot-yellow"></span>
+              <span class="home-browser-dot home-dot-green"></span>
+            </div>
+            <div class="home-browser-url-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <span>https://medrecsys.app/predict</span>
+            </div>
+            <div style="width: 50px;"></div>
+          </div>
+
+          <!-- Mockup Inner App Interface -->
+          <div class="home-preview-mockup-body">
+            <div class="home-mockup-header">
+              <span class="home-mockup-badge">Symptom Prediction</span>
+              <h3>How are you feeling today?</h3>
+            </div>
+
+            <!-- Search Field -->
+            <div class="home-mockup-search-box">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" class="home-mockup-input" id="demo-search-input" value="Headache, Fatigue, Fever" placeholder="Type or select symptoms..." readonly>
+            </div>
+
+            <!-- Selected Symptoms Group -->
+            <div class="home-mockup-pills-group">
+              <span class="home-pills-label">Selected Symptoms:</span>
+              <div class="home-pills-wrap" id="demo-selected-pills">
+                <span class="home-pill home-pill-selected">
+                  <span>Headache</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </span>
+                <span class="home-pill home-pill-selected">
+                  <span>Fatigue</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </span>
+                <span class="home-pill home-pill-selected">
+                  <span>Fever</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- Suggested Additional Symptoms -->
+            <div class="home-mockup-pills-group">
+              <span class="home-pills-label">Suggested Additions:</span>
+              <div class="home-pills-wrap" id="demo-available-pills">
+                <button type="button" class="home-pill home-pill-selectable" data-symptom="Cough">
+                  <span>+ Cough</span>
+                </button>
+                <button type="button" class="home-pill home-pill-selectable" data-symptom="Nausea">
+                  <span>+ Nausea</span>
+                </button>
+                <button type="button" class="home-pill home-pill-selectable" data-symptom="Dizziness">
+                  <span>+ Dizziness</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- CTA Row inside mockup -->
+            <div class="home-mockup-cta-row">
+              <div class="home-mockup-status-live">
+                <span class="pulse-circle"></span>
+                <span>Active engine: Ready to evaluate 132 symptom dimensions</span>
+              </div>
+
+              <a href="/predict" class="home-btn-primary" style="padding: 12px 28px; font-size: 0.95rem;">
+                <span>Analyze Symptoms</span>
+                <span class="arrow-icon">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. FEATURES -->
+    <section class="home-features-section">
+      <div class="home-container">
+        <div class="home-section-header">
+          <span class="home-section-eyebrow">Engine Features</span>
+          <h2 class="home-section-title">Everything you need for smarter symptom analysis</h2>
+          <p class="home-section-subtitle">
+            Engineered with modern machine learning classifiers to provide structured and actionable health context.
+          </p>
+        </div>
+
+        <div class="home-features-grid">
+          <!-- Feature 1 -->
+          <article class="home-feature-card">
+            <div class="home-feature-icon-box" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+            </div>
+            <h3>AI Symptom Analysis</h3>
+            <p>Analyze multiple symptoms through an intelligent prediction workflow.</p>
+          </article>
+
+          <!-- Feature 2 -->
+          <article class="home-feature-card">
+            <div class="home-feature-icon-box" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+              </svg>
+            </div>
+            <h3>Condition Prediction</h3>
+            <p>View possible health conditions based on submitted symptoms.</p>
+          </article>
+
+          <!-- Feature 3 -->
+          <article class="home-feature-card">
+            <div class="home-feature-icon-box" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <h3>Result History</h3>
+            <p>Access previously generated prediction results.</p>
+          </article>
+
+          <!-- Feature 4 -->
+          <article class="home-feature-card">
+            <div class="home-feature-icon-box" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            </div>
+            <h3>Intelligent Insights</h3>
+            <p>Receive clear and organized informational insights.</p>
+          </article>
+
+          <!-- Feature 5 -->
+          <article class="home-feature-card">
+            <div class="home-feature-icon-box" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <h3>Fast Analysis</h3>
+            <p>Get prediction results through a streamlined interface.</p>
+          </article>
+
+          <!-- Feature 6 -->
+          <article class="home-feature-card">
+            <div class="home-feature-icon-box" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+            </div>
+            <h3>Developer Friendly</h3>
+            <p>Explore the technology and implementation behind MedRecSys.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. MEDICAL DISCLAIMER -->
+    <section class="home-disclaimer-section">
+      <div class="home-container">
+        <div class="home-disclaimer-card">
+          <div class="home-disclaimer-icon-wrap" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="home-disclaimer-content">
+            <h4>Important medical information</h4>
+            <p>
+              MedRecSys is an AI-assisted informational system and is not a substitute for professional medical diagnosis, treatment, or medical advice. Prediction results should not be used as a definitive diagnosis. Always consult a qualified healthcare professional for medical concerns.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. FINAL CTA -->
+    <section class="home-cta-section">
+      <div class="home-container">
+        <div class="home-cta-card">
+          <div class="home-cta-content">
+            <h2 class="home-cta-heading">Ready to explore your symptoms?</h2>
+            <p class="home-cta-description">
+              Start a prediction and explore AI-assisted health insights through MedRecSys.
+            </p>
+            <a href="/predict" class="home-cta-btn">
+              <span>Start Prediction</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 9. FOOTER -->
+  <footer class="home-footer">
+    <div class="home-container">
+      <div class="home-footer-grid">
+        <!-- Brand column -->
+        <div class="home-footer-brand-col">
+          <a href="/" class="home-navbar-brand">
+            <div class="home-brand-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v20M2 12h20"></path>
+                <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+              </svg>
+            </div>
+            <span class="home-brand-text">Med<span>RecSys</span></span>
+          </a>
+          <p class="home-footer-tagline">
+            AI-assisted healthcare insights.
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="home-footer-links-col">
+          <span class="home-footer-col-title">Navigation</span>
+          <a href="/" class="home-footer-link">Home</a>
+          <a href="/predict" class="home-footer-link">Predict</a>
+          <a href="/results" class="home-footer-link">Results</a>
+        </div>
+
+        <!-- System Links -->
+        <div class="home-footer-links-col">
+          <span class="home-footer-col-title">Platform</span>
+          <a href="#how-it-works" class="home-footer-link">How It Works</a>
+          <a href="/developer" class="home-footer-link">Developer</a>
+          <a href="/contact" class="home-footer-link">Contact</a>
+        </div>
+      </div>
+
+      <div class="home-footer-bottom">
+        <span>&copy; 2026 MedRecSys. All rights reserved.</span>
+        <p class="home-footer-disclaimer-note">
+          Informational tool only. Consult a physician for all medical diagnoses and treatments.
+        </p>
       </div>
     </div>
-  </nav>
+  </footer>
 
-  <div class="page-shell">
-    <header class="hero-section glass-card">
-      <div class="hero-copy">
-        <p class="eyebrow">Home</p>
-        <h1>One health assistant, now split into cleaner separate pages.</h1>
-        <p class="hero-text">
-          Browse a clear home page, go to prediction when you are ready, review output
-          on a dedicated results page, and keep contact messaging separate and focused.
-        </p>
-        <div class="hero-actions">
-          <a class="primary-button" href="/predict">Go to predict</a>
-          <a class="secondary-button" href="/developer">Developer page</a>
-        </div>
-        <div class="hero-stats">
-          <div class="stat-card"><strong>Home</strong><span>Overview and quick start</span></div>
-          <div class="stat-card"><strong>Predict</strong><span>Symptom input page</span></div>
-          <div class="stat-card"><strong>Results</strong><span>Dedicated analysis page</span></div>
-        </div>
-      </div>
+  <!-- Interactive script for Navbar & Demo preview -->
+  <script>
+    // Hamburger menu toggle for mobile
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
 
-      <aside class="hero-panel">
-        <div class="hero-panel-head">
-          <p>Quick actions</p>
-          <span>Choose a page</span>
-        </div>
-        <a class="chip-link" href="/predict">Open the symptom prediction page</a>
-        <a class="chip-link" href="/results">View your latest saved result</a>
-        <a class="chip-link" href="/developer">Open the developer page</a>
-        <a class="chip-link" href="/contact">Send a realtime message</a>
-      </aside>
-    </header>
+    if (toggleBtn && mobileMenu) {
+      toggleBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        toggleBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
 
-    <section class="overview-grid">
-      <article class="overview-card glass-card">
-        <p class="section-kicker">Structured navigation</p>
-        <h2>Each feature has its own page now</h2>
-        <p>
-          This makes the app easier to use and keeps every page focused on one job
-          instead of packing everything into one long screen.
-        </p>
-      </article>
+    // Interactive Demo Preview on Home Page
+    const availablePills = document.querySelectorAll('#demo-available-pills button');
+    const selectedPillsWrap = document.getElementById('demo-selected-pills');
+    const searchInput = document.getElementById('demo-search-input');
 
-      <article class="overview-card glass-card accent-card">
-        <p class="section-kicker">Design direction</p>
-        <h2>Blue base with light red highlights</h2>
-        <p>
-          The navbar keeps the previous glass feel, while the rest of the interface
-          stays bright, soft, and more structured.
-        </p>
-      </article>
-    </section>
+    if (availablePills && selectedPillsWrap && searchInput) {
+      availablePills.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const symptom = btn.getAttribute('data-symptom');
+          if (!symptom) return;
 
-    <section class="feature-grid">
-      <article class="feature-box glass-card">
-        <p class="section-kicker">Predict</p>
-        <h3>Enter symptoms</h3>
-        <p>Use the symptom library or type symptoms manually, then send them for analysis.</p>
-        <a class="text-link" href="/predict">Open predict page</a>
-      </article>
+          // Add to selected
+          const newPill = document.createElement('span');
+          newPill.className = 'home-pill home-pill-selected';
+          newPill.innerHTML = `<span>${symptom}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`;
+          
+          newPill.addEventListener('click', () => {
+            newPill.remove();
+            btn.style.display = 'inline-flex';
+            updateInput();
+          });
 
-      <article class="feature-box glass-card">
-        <p class="section-kicker">Results</p>
-        <h3>Review saved output</h3>
-        <p>Your latest prediction is shown on its own page with recommendations and alternatives.</p>
-        <a class="text-link" href="/results">Open results page</a>
-      </article>
+          selectedPillsWrap.appendChild(newPill);
+          btn.style.display = 'none';
+          updateInput();
+        });
+      });
 
-      <article class="feature-box glass-card">
-        <p class="section-kicker">Developer</p>
-        <h3>View project details</h3>
-        <p>Keep technical information on its own page without mixing it into the main user flow.</p>
-        <a class="text-link" href="/developer">Open developer page</a>
-      </article>
-
-      <article class="feature-box glass-card">
-        <p class="section-kicker">Contact</p>
-        <h3>Send realtime mail</h3>
-        <p>Reach your inbox directly from the Node backend without mixing the form into the analysis screen.</p>
-        <a class="text-link" href="/contact">Open contact page</a>
-      </article>
-    </section>
-  </div>
-
-  <script src="/app.js"></script>
+      function updateInput() {
+        const currentPills = selectedPillsWrap.querySelectorAll('span.home-pill span');
+        const list = Array.from(currentPills).map(el => el.textContent.trim()).filter(Boolean);
+        searchInput.value = list.join(', ');
+      }
+    }
+  </script>
+  <script src="/user-session.js" defer></script>
 </body>
 </html>

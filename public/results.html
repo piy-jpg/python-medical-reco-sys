@@ -3,120 +3,534 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MedRecSys | Results</title>
+  <title>MedRecSys | AI Health Analysis Report</title>
+  <meta name="description" content="Review your AI-assisted health analysis report, symptom match insights, and recommendations.">
+  
+  <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Dedicated Results Page Stylesheet -->
+  <link rel="stylesheet" href="/results.css">
+
+  <!-- Auth Gate: Require login before accessing Results -->
+  <script>
+    (function () {
+      try {
+        var user = localStorage.getItem('medrecsys:currentUser');
+        if (!user) {
+          window.location.replace('/login?redirect=' + encodeURIComponent(window.location.pathname));
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
-<body>
-  <div class="bg-shapes" aria-hidden="true">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
+<body class="results-page">
+
+  <!-- Ambient Glow Background -->
+  <div class="results-bg-ambient" aria-hidden="true">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="ambient-grid"></div>
   </div>
 
-  <nav class="navbar">
-    <div class="nav-container">
-      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
-      <div class="nav-links">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link" href="/predict">Predict</a>
-        <a class="nav-link active" href="/results">Results</a>
-        <a class="nav-link" href="/developer">Developer</a>
-        <a class="nav-link" href="/contact">Contact</a>
+  <!-- 1. NAVBAR -->
+  <header class="results-navbar-wrapper">
+    <nav class="results-navbar" aria-label="Main Navigation">
+      <!-- Logo -->
+      <a href="/" class="results-navbar-brand">
+        <div class="results-brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M2 12h20"></path>
+            <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+          </svg>
+        </div>
+        <span class="results-brand-text">Med<span>RecSys</span></span>
+      </a>
+
+      <!-- Navigation Links -->
+      <ul class="results-nav-menu">
+        <li><a class="results-nav-link" href="/">Home</a></li>
+        <li><a class="results-nav-link" href="/predict">Predict</a></li>
+        <li><a class="results-nav-link active" href="/results">Results</a></li>
+        <li><a class="results-nav-link" href="/#how-it-works">How It Works</a></li>
+        <li><a class="results-nav-link" href="/developer">Developer</a></li>
+        <li><a class="results-nav-link" href="/contact">Contact</a></li>
+        <li><a class="results-nav-link" href="/login">Sign In</a></li>
+      </ul>
+
+      <!-- Right: New Prediction Button -->
+      <div class="results-navbar-right">
+        <a href="/predict" class="results-btn-nav-action">
+          <span>New Prediction</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="results-hamburger-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Dropdown Nav -->
+      <div class="results-mobile-nav" id="mobile-menu">
+        <a class="results-nav-link" href="/">Home</a>
+        <a class="results-nav-link" href="/predict">Predict</a>
+        <a class="results-nav-link active" href="/results">Results</a>
+        <a class="results-nav-link" href="/#how-it-works">How It Works</a>
+        <a class="results-nav-link" href="/developer">Developer</a>
+        <a class="results-nav-link" href="/contact">Contact</a>
+        <a class="results-nav-link" href="/login">Sign In</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="results-container">
+    <!-- 2. RESULTS HERO -->
+    <section class="results-hero-section">
+      <div class="results-hero-grid">
+        <div class="results-hero-copy">
+          <div class="results-eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span>AI HEALTH ANALYSIS</span>
+          </div>
+          <h1 class="results-title">Your health analysis is ready.</h1>
+          <p class="results-subtitle">
+            Review the latest AI-assisted symptom analysis and explore the information generated from your submitted symptoms.
+          </p>
+
+          <div class="results-hero-actions">
+            <a href="/predict" class="results-btn-primary">
+              <span>New Prediction</span>
+              <span>→</span>
+            </a>
+            <a href="/predict" class="results-btn-secondary">
+              <span>Back to Predict</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Right Status Card -->
+        <div class="results-hero-status-card">
+          <div class="results-status-icon-bubble">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+          <div class="results-status-info">
+            <h4 id="status-pill">Analysis Complete</h4>
+            <p id="hero-timestamp">Latest saved analysis</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. EMPTY STATE (When no saved prediction exists) -->
+    <section id="empty-state" class="results-empty-card">
+      <div class="results-empty-icon-wrap">
+        <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="12" y1="18" x2="12" y2="12"></line>
+          <line x1="9" y1="15" x2="15" y2="15"></line>
+        </svg>
+      </div>
+      <h2 class="results-empty-title">No analysis yet</h2>
+      <p class="results-empty-desc">Run a symptom analysis to see your results here.</p>
+      <a href="/predict" class="results-btn-primary" style="padding: 15px 36px;">
+        <span>Start Prediction</span>
+        <span>→</span>
+      </a>
+    </section>
+
+    <!-- DYNAMIC REPORT SECTION (Preserved id="results") -->
+    <div id="results" class="results hidden">
+      <div class="results-report-grid">
+        
+        <!-- LEFT COLUMN: Primary Analysis & Clinical Advisories -->
+        <div class="results-left-col">
+          <!-- 3. MAIN RESULT CARD -->
+          <article class="results-card results-main-card">
+            <div class="results-card-header-bar">
+              <span class="results-badge-top-match">Top Match</span>
+              <span class="results-badge-status-complete">
+                <span class="dot"></span>
+                <span>Analysis Complete</span>
+              </span>
+            </div>
+
+            <!-- Dynamic condition name -->
+            <h2 id="predicted-disease" class="results-predicted-name">-</h2>
+            
+            <!-- Dynamic description -->
+            <p id="predicted-description" class="results-predicted-description">-</p>
+
+            <!-- Dynamic result summary chip -->
+            <span id="result-summary" class="results-summary-chip">Best match evaluated</span>
+          </article>
+
+          <!-- 5. SYMPTOMS ANALYZED -->
+          <article class="results-card">
+            <div class="results-section-header-row">
+              <h3>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <span>Symptoms analyzed</span>
+              </h3>
+              <span id="symptoms-count-badge" class="results-badge-top-match" style="background:#f1f5f9; color: var(--navy-dark); border-color: rgba(14,39,82,0.1);">0 symptoms</span>
+            </div>
+
+            <!-- Visual symptom chips container -->
+            <div id="symptoms-chips-container" class="results-chips-wrap">
+              <!-- Dynamically populated chips -->
+            </div>
+
+            <!-- Preserved elements for app.js -->
+            <span id="matched-symptoms" style="display: none;">-</span>
+            <span id="unknown-symptoms" style="display: none;">None</span>
+          </article>
+
+          <!-- 7. RESULT EXPLANATION & CLINICAL RECOMMENDATIONS -->
+          <article class="results-card">
+            <div class="results-section-header-row">
+              <h3>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                <span>Understanding your result</span>
+              </h3>
+            </div>
+            <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 20px;">
+              Informational suggestions derived from the disease classification model and medical reference datasets.
+            </p>
+
+            <!-- 4 Advisory Boxes (Precautions, Medications, Diets, Workouts) -->
+            <div class="results-rec-grid">
+              <!-- Precautions -->
+              <div class="results-rec-box">
+                <div class="results-rec-header">
+                  <div class="results-rec-icon icon-blue">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  </div>
+                  <h4>Precautions</h4>
+                </div>
+                <ul id="precautions-list"></ul>
+              </div>
+
+              <!-- Medications -->
+              <div class="results-rec-box">
+                <div class="results-rec-header">
+                  <div class="results-rec-icon icon-purple">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                  </div>
+                  <h4>Medications</h4>
+                </div>
+                <ul id="medications-list"></ul>
+              </div>
+
+              <!-- Diet Suggestions -->
+              <div class="results-rec-box">
+                <div class="results-rec-header">
+                  <div class="results-rec-icon icon-green">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M8 12h8M12 8v8"></path></svg>
+                  </div>
+                  <h4>Diet ideas</h4>
+                </div>
+                <ul id="diets-list"></ul>
+              </div>
+
+              <!-- Workouts & Habits -->
+              <div class="results-rec-box">
+                <div class="results-rec-header">
+                  <div class="results-rec-icon icon-amber">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                  </div>
+                  <h4>Workouts & habits</h4>
+                </div>
+                <ul id="workouts-list"></ul>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- RIGHT COLUMN: Confidence Gauge, Metadata & Alternatives -->
+        <div class="results-right-col">
+          <!-- 4 & 9. CONFIDENCE VISUALIZATION -->
+          <article class="results-card results-confidence-card">
+            <span class="results-confidence-label">Model confidence</span>
+            
+            <!-- Radial SVG Gauge -->
+            <div class="results-radial-wrap">
+              <svg class="results-radial-svg" viewBox="0 0 140 140">
+                <defs>
+                  <linearGradient id="confidenceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0052cc" />
+                    <stop offset="50%" stop-color="#0088ff" />
+                    <stop offset="100%" stop-color="#00d2ff" />
+                  </linearGradient>
+                </defs>
+                <circle class="results-radial-bg" cx="70" cy="70" r="58" />
+                <circle id="radial-progress-bar" class="results-radial-bar" cx="70" cy="70" r="58" stroke-dasharray="364.4" stroke-dashoffset="364.4" />
+              </svg>
+              <div class="results-radial-center">
+                <strong id="confidence-score" class="results-radial-value">0%</strong>
+                <span class="results-radial-caption">Prediction match</span>
+              </div>
+            </div>
+
+            <p class="results-confidence-note">
+              Confidence reflects the model's prediction score and should not be interpreted as medical certainty.
+            </p>
+          </article>
+
+          <!-- 6 & 10. ANALYSIS OVERVIEW METADATA -->
+          <article class="results-card">
+            <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--navy-dark); margin-bottom: 16px;">
+              Analysis overview
+            </h3>
+
+            <div class="results-overview-grid">
+              <div class="results-overview-tile">
+                <span class="results-overview-tile-label">Top Match</span>
+                <span id="tile-top-match" class="results-overview-tile-val">-</span>
+              </div>
+              <div class="results-overview-tile">
+                <span class="results-overview-tile-label">Confidence</span>
+                <span id="tile-confidence" class="results-overview-tile-val">-</span>
+              </div>
+              <div class="results-overview-tile">
+                <span class="results-overview-tile-label">Matched Symptoms</span>
+                <span id="tile-matched-count" class="results-overview-tile-val">-</span>
+              </div>
+              <div class="results-overview-tile">
+                <span class="results-overview-tile-label">Analysis Time</span>
+                <span id="tile-timestamp" class="results-overview-tile-val" style="font-size: 0.84rem;">-</span>
+              </div>
+            </div>
+
+            <!-- Preserved timestamp for app.js -->
+            <p id="result-timestamp" class="hidden"></p>
+          </article>
+
+          <!-- 8. OTHER POSSIBLE MATCHES -->
+          <article class="results-card results-alternatives-card">
+            <h3>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+              <span>Other possible matches</span>
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px;">
+              Secondary ranked candidates evaluated during symptom classification.
+            </p>
+
+            <!-- Preserved alternatives-list for app.js -->
+            <div id="alternatives-list" class="results-alternatives-list"></div>
+          </article>
+
+          <!-- 11. RESULT ACTIONS -->
+          <article class="results-card results-actions-card">
+            <a href="/predict" class="results-btn-action-primary">
+              <span>Run New Analysis</span>
+              <span>→</span>
+            </a>
+
+            <div class="results-actions-row">
+              <button type="button" class="results-btn-action-secondary" id="btn-refresh-result">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                <span>Refresh</span>
+              </button>
+
+              <button type="button" class="results-btn-action-secondary" id="btn-copy-result">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <span id="copy-label">Copy Result</span>
+              </button>
+            </div>
+
+            <!-- Preserved result-cta for app.js -->
+            <div id="result-cta" class="hidden"></div>
+          </article>
+        </div>
       </div>
     </div>
-  </nav>
 
-  <div class="page-shell">
-    <section class="page-header glass-card">
-      <p class="eyebrow">Results</p>
-      <h1 class="page-title">Review the latest prediction separately</h1>
-      <p class="page-copy">
-        This page shows the most recent analysis saved from the predict page. Run a
-        new symptom check anytime to refresh these results.
-      </p>
-    </section>
-
-    <section class="panel glass-card results-panel results-page-panel">
-      <div class="panel-header">
-        <div>
-          <p class="section-kicker">Prediction</p>
-          <h2>Recommendation summary</h2>
-        </div>
-        <span id="status-pill" class="pill muted">Waiting for prediction</span>
+    <!-- 12. MEDICAL DISCLAIMER -->
+    <section class="results-disclaimer-card">
+      <div class="results-disclaimer-icon-wrap" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
       </div>
-
-      <div id="empty-state" class="empty-state">
-        <p class="empty-title">No saved result yet.</p>
-        <p class="empty-copy">
-          Visit the predict page, submit symptoms, and your latest result will appear here automatically.
+      <div class="results-disclaimer-content">
+        <h4>Important medical information</h4>
+        <p>
+          MedRecSys provides AI-assisted informational insights and is not a substitute for professional medical diagnosis, treatment, or medical advice. A prediction score should not be interpreted as medical certainty. For medical concerns, consult a qualified healthcare professional.
         </p>
-        <a class="primary-button inline-button" href="/predict">Go to predict page</a>
       </div>
+    </section>
+  </main>
 
-      <div id="results" class="results hidden">
-        <section class="result-hero">
-          <div>
-            <p class="section-kicker">Top match</p>
-            <h3 id="predicted-disease">-</h3>
-            <p id="predicted-description" class="description-text"></p>
-            <p id="result-summary" class="result-summary"></p>
-            <p id="result-timestamp" class="result-timestamp"></p>
-          </div>
-          <div class="confidence-card">
-            <span>Confidence</span>
-            <strong id="confidence-score">0%</strong>
-          </div>
-        </section>
+  <!-- FOOTER -->
+  <footer class="results-footer">
+    <div class="results-container">
+      <div class="results-footer-grid">
+        <div class="results-footer-brand-col">
+          <a href="/" class="results-navbar-brand">
+            <div class="results-brand-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 2v20M2 12h20"></path><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>
+            </div>
+            <span class="results-brand-text">Med<span>RecSys</span></span>
+          </a>
+          <p class="results-footer-tagline">AI-assisted healthcare insights.</p>
+        </div>
 
-        <section class="meta-strip">
-          <div>
-            <span>Matched symptoms</span>
-            <p id="matched-symptoms">-</p>
-          </div>
-          <div>
-            <span>Unknown symptoms</span>
-            <p id="unknown-symptoms">None</p>
-          </div>
-        </section>
+        <div class="results-footer-links-col">
+          <span class="results-footer-col-title">Navigation</span>
+          <a href="/" class="results-footer-link">Home</a>
+          <a href="/predict" class="results-footer-link">Predict</a>
+          <a href="/results" class="results-footer-link">Results</a>
+        </div>
 
-        <section class="cards-grid">
-          <article class="info-card">
-            <h4>Precautions</h4>
-            <ul id="precautions-list"></ul>
-          </article>
-          <article class="info-card">
-            <h4>Medications</h4>
-            <ul id="medications-list"></ul>
-          </article>
-          <article class="info-card">
-            <h4>Diet ideas</h4>
-            <ul id="diets-list"></ul>
-          </article>
-          <article class="info-card">
-            <h4>Workouts and habits</h4>
-            <ul id="workouts-list"></ul>
-          </article>
-        </section>
-
-        <section class="alternatives">
-          <h4>Alternative matches</h4>
-          <div id="alternatives-list" class="alternative-list"></div>
-        </section>
-
-        <div id="result-cta" class="result-cta hidden">
-          <a class="primary-button inline-button" href="/predict">Run another prediction</a>
+        <div class="results-footer-links-col">
+          <span class="results-footer-col-title">Platform</span>
+          <a href="/#how-it-works" class="results-footer-link">How It Works</a>
+          <a href="/developer" class="results-footer-link">Developer</a>
+          <a href="/contact" class="results-footer-link">Contact</a>
         </div>
       </div>
 
-      <div class="disclaimer">
-        This tool is informational only and is not a substitute for diagnosis or treatment from a licensed medical professional.
+      <div class="results-footer-bottom">
+        <span>&copy; 2026 MedRecSys. All rights reserved.</span>
+        <p style="max-width: 500px; font-size: 0.82rem; line-height: 1.5;">
+          Informational tool only. Consult a physician for all medical diagnoses and treatments.
+        </p>
       </div>
-    </section>
-  </div>
+    </div>
+  </footer>
 
+  <!-- Existing Application Script -->
   <script src="/app.js"></script>
+
+  <!-- Results Page UI Enhancement Controller -->
+  <script>
+    (function () {
+      const PREDICTION_KEY = "medrecsys:lastPrediction";
+      const radialBar = document.getElementById("radial-progress-bar");
+      const chipsContainer = document.getElementById("symptoms-chips-container");
+      const symptomsCountBadge = document.getElementById("symptoms-count-badge");
+      const tileTopMatch = document.getElementById("tile-top-match");
+      const tileConfidence = document.getElementById("tile-confidence");
+      const tileMatchedCount = document.getElementById("tile-matched-count");
+      const tileTimestamp = document.getElementById("tile-timestamp");
+      const heroTimestamp = document.getElementById("hero-timestamp");
+      const btnRefresh = document.getElementById("btn-refresh-result");
+      const btnCopy = document.getElementById("btn-copy-result");
+      const copyLabel = document.getElementById("copy-label");
+      const mobileToggle = document.getElementById("mobile-menu-toggle");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      // Mobile Menu
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener("click", () => {
+          const isOpen = mobileMenu.classList.toggle("open");
+          mobileToggle.setAttribute("aria-expanded", String(isOpen));
+        });
+      }
+
+      function updateEnhancements() {
+        const raw = sessionStorage.getItem(PREDICTION_KEY);
+        if (!raw) return;
+
+        try {
+          const data = JSON.parse(raw);
+          const confidenceVal = Number(data.prediction?.confidence || 0);
+
+          // 1. Radial Progress Circle (Circumference = 2 * PI * 58 ≈ 364.4)
+          if (radialBar) {
+            const circumference = 364.4;
+            const offset = circumference - (circumference * Math.min(confidenceVal, 100)) / 100;
+            radialBar.style.strokeDasharray = `${circumference}`;
+            radialBar.style.strokeDashoffset = `${offset}`;
+          }
+
+          // 2. Render Symptom Chips
+          if (chipsContainer) {
+            chipsContainer.innerHTML = "";
+            const symptoms = data.matchedSymptoms && data.matchedSymptoms.length
+              ? data.matchedSymptoms
+              : (data.submittedSymptoms || []);
+
+            if (symptomsCountBadge) {
+              symptomsCountBadge.textContent = `${symptoms.length} symptom${symptoms.length === 1 ? "" : "s"}`;
+            }
+
+            symptoms.forEach(sym => {
+              const chip = document.createElement("span");
+              chip.className = "results-symptom-chip";
+              chip.textContent = sym;
+              chipsContainer.appendChild(chip);
+            });
+          }
+
+          // 3. Populate Overview Metadata Tiles
+          if (tileTopMatch) tileTopMatch.textContent = data.prediction?.disease || "-";
+          if (tileConfidence) tileConfidence.textContent = `${confidenceVal}%`;
+          if (tileMatchedCount) tileMatchedCount.textContent = `${data.matchedSymptoms?.length || 0} matched`;
+          
+          if (data.generatedAt) {
+            const formatted = new Date(data.generatedAt).toLocaleString([], {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit"
+            });
+            if (tileTimestamp) tileTimestamp.textContent = formatted;
+            if (heroTimestamp) heroTimestamp.textContent = `Generated on ${formatted}`;
+          }
+        } catch (e) {
+          console.error("Failed to enhance results:", e);
+        }
+      }
+
+      // Refresh Button
+      if (btnRefresh) {
+        btnRefresh.addEventListener("click", () => {
+          window.location.reload();
+        });
+      }
+
+      // Copy Result Summary Button
+      if (btnCopy) {
+        btnCopy.addEventListener("click", async () => {
+          const raw = sessionStorage.getItem(PREDICTION_KEY);
+          if (!raw) return;
+          try {
+            const data = JSON.parse(raw);
+            const text = [
+              `MedRecSys AI Health Analysis Report`,
+              `Top Match: ${data.prediction?.disease} (${data.prediction?.confidence}%)`,
+              `Description: ${data.recommendation?.description || "N/A"}`,
+              `Symptoms: ${(data.matchedSymptoms || []).join(", ")}`,
+              `Generated: ${data.generatedAt ? new Date(data.generatedAt).toLocaleString() : "Recent"}`
+            ].join("\n");
+
+            await navigator.clipboard.writeText(text);
+            if (copyLabel) {
+              const original = copyLabel.textContent;
+              copyLabel.textContent = "Copied!";
+              setTimeout(() => {
+                copyLabel.textContent = original;
+              }, 2000);
+            }
+          } catch (err) {
+            console.error("Clipboard copy failed:", err);
+          }
+        });
+      }
+
+      // Run on page load after app.js completes
+      setTimeout(updateEnhancements, 100);
+    })();
+  </script>
+  <script src="/user-session.js" defer></script>
 </body>
 </html>

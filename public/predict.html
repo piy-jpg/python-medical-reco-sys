@@ -3,87 +3,641 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MedRecSys | Predict</title>
+  <title>MedRecSys | AI Symptom Analysis Workspace</title>
+  <meta name="description" content="Enter your symptoms and let MedRecSys analyze them to provide AI-assisted informational health insights.">
+  
+  <!-- Preconnect & Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Dedicated Predict Page Stylesheet -->
+  <link rel="stylesheet" href="/predict.css">
+
+  <!-- Auth Gate: Require login before accessing Dashboard -->
+  <script>
+    (function () {
+      try {
+        var user = localStorage.getItem('medrecsys:currentUser');
+        if (!user) {
+          window.location.replace('/login?redirect=' + encodeURIComponent(window.location.pathname));
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
-<body>
-  <div class="bg-shapes" aria-hidden="true">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-    <div class="shape shape-3"></div>
+<body class="predict-page">
+
+  <!-- Ambient Glow Background -->
+  <div class="predict-bg-ambient" aria-hidden="true">
+    <div class="ambient-glow-1"></div>
+    <div class="ambient-glow-2"></div>
+    <div class="ambient-grid"></div>
   </div>
 
-  <nav class="navbar">
-    <div class="nav-container">
-      <a class="navbar-brand" href="/"><span class="brand-icon">+</span><span>MedRecSys</span></a>
-      <div class="nav-links">
-        <a class="nav-link" href="/">Home</a>
-        <a class="nav-link active" href="/predict">Predict</a>
-        <a class="nav-link" href="/results">Results</a>
-        <a class="nav-link" href="/developer">Developer</a>
-        <a class="nav-link" href="/contact">Contact</a>
-      </div>
-    </div>
-  </nav>
+  <!-- 2. NAVBAR -->
+  <header class="predict-navbar-wrapper">
+    <nav class="predict-navbar" aria-label="Main Navigation">
+      <!-- Left: MedRecSys Logo -->
+      <a href="/" class="predict-navbar-brand">
+        <div class="predict-brand-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2v20M2 12h20"></path>
+            <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+          </svg>
+        </div>
+        <span class="predict-brand-text">Med<span>RecSys</span></span>
+      </a>
 
-  <div class="page-shell">
-    <section class="page-header glass-card">
-      <p class="eyebrow">Predict</p>
-      <h1 class="page-title">Describe symptoms on a dedicated page</h1>
-      <p class="page-copy">
-        Enter symptoms here, run the analysis, and you will be moved to the separate
-        results page automatically after a successful prediction.
-      </p>
+      <!-- Navigation Links -->
+      <ul class="predict-nav-menu">
+        <li><a class="predict-nav-link" href="/">Home</a></li>
+        <li><a class="predict-nav-link active" href="/predict">Predict</a></li>
+        <li><a class="predict-nav-link" href="/results">Results</a></li>
+        <li><a class="predict-nav-link" href="/#how-it-works">How It Works</a></li>
+        <li><a class="predict-nav-link" href="/developer">Developer</a></li>
+        <li><a class="predict-nav-link" href="/contact">Contact</a></li>
+        <li><a class="predict-nav-link" href="/login">Sign In</a></li>
+      </ul>
+
+      <!-- Right: Action Button -->
+      <div class="predict-navbar-right">
+        <a href="#prediction-workspace" class="predict-btn-nav-action">
+          <span>Start Prediction</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </a>
+
+        <!-- Mobile Hamburger Toggle -->
+        <button class="predict-hamburger-btn" id="mobile-menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Dropdown Nav -->
+      <div class="predict-mobile-nav" id="mobile-menu">
+        <a class="predict-nav-link" href="/">Home</a>
+        <a class="predict-nav-link active" href="/predict">Predict</a>
+        <a class="predict-nav-link" href="/results">Results</a>
+        <a class="predict-nav-link" href="/#how-it-works">How It Works</a>
+        <a class="predict-nav-link" href="/developer">Developer</a>
+        <a class="predict-nav-link" href="/contact">Contact</a>
+        <a class="predict-nav-link" href="/login">Sign In</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="predict-container" id="prediction-workspace">
+    <!-- 3. PAGE HEADER -->
+    <section class="predict-header-section">
+      <div class="predict-header-content">
+        <div class="predict-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>AI SYMPTOM ANALYSIS</span>
+        </div>
+        <h1 class="predict-title">Tell us how you're feeling.</h1>
+        <p class="predict-subtitle">
+          Enter your symptoms and let MedRecSys analyze them to provide AI-assisted informational insights.
+        </p>
+        <div class="predict-trust-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          <span>AI-assisted • Fast analysis • Informational only</span>
+        </div>
+      </div>
     </section>
 
-    <main class="single-panel-layout">
-      <section class="panel glass-card input-panel">
-        <div class="panel-header">
+    <!-- 4. MAIN PREDICTION WORKSPACE (Two-Column Layout) -->
+    <div class="predict-workspace-grid">
+      <!-- LEFT COLUMN: Symptom Input Card -->
+      <section class="predict-card predict-input-card">
+        <div class="predict-card-header">
           <div>
-            <p class="section-kicker">Symptom input</p>
-            <h2>Describe what you feel</h2>
+            <h2 class="predict-card-title">Describe your symptoms</h2>
+            <p class="predict-card-desc">Type your symptoms naturally or select them from the symptom library below.</p>
           </div>
-          <span id="status-pill" class="pill muted">Ready</span>
+          <!-- Preserved status-pill for app.js -->
+          <span id="status-pill" class="predict-status-pill ready">Ready</span>
         </div>
 
-        <form id="prediction-form" class="prediction-form">
-          <label for="symptoms" class="input-label">Symptoms</label>
-          <textarea
-            id="symptoms"
-            name="symptoms"
-            rows="5"
-            placeholder="Example: headache, nausea, fatigue"
-          ></textarea>
+        <!-- Preserved prediction-form -->
+        <form id="prediction-form" class="predict-form">
+          <div class="predict-textarea-wrapper">
+            <div class="predict-textarea-header">
+              <label for="symptoms" class="predict-input-label">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <span>Symptoms</span>
+              </label>
+              <div class="predict-textarea-tools">
+                <span class="predict-char-count" id="symptoms-count">0 symptoms entered</span>
+                <button type="button" class="predict-btn-clear" id="btn-clear-textarea" style="display: none;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                  <span>Clear</span>
+                </button>
+              </div>
+            </div>
 
-          <div class="helper-row">
-            <p id="helper-text">Pick quick examples or type symptoms manually. The latest result will open on the results page.</p>
-            <button type="submit" class="primary-button">Analyze symptoms</button>
+            <!-- Preserved textarea id="symptoms" with requested placeholder -->
+            <textarea
+              id="symptoms"
+              name="symptoms"
+              class="predict-textarea"
+              rows="4"
+              placeholder="Example: headache, nausea, fatigue, mild fever..."
+            ></textarea>
+          </div>
+
+          <!-- Quick Symptom Sets -->
+          <div class="predict-quicksets-section">
+            <span class="predict-quicksets-label">Quick symptom sets</span>
+            <div class="predict-quicksets-grid">
+              <button type="button" class="predict-quickset-card" data-example="itching, skin rash, nodal skin eruptions">
+                <div class="predict-quickset-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="m4.93 4.93 4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"></path></svg>
+                </div>
+                <span class="predict-quickset-title">Skin irritation set</span>
+                <span class="predict-quickset-sub">Itching, skin rash, eruptions</span>
+              </button>
+
+              <button type="button" class="predict-quickset-card" data-example="headache, nausea, fatigue">
+                <div class="predict-quickset-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M8 15h8M9 9h.01M15 9h.01"></path></svg>
+                </div>
+                <span class="predict-quickset-title">General discomfort set</span>
+                <span class="predict-quickset-sub">Headache, nausea, fatigue</span>
+              </button>
+
+              <button type="button" class="predict-quickset-card" data-example="continuous sneezing, cough, chills">
+                <div class="predict-quickset-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path></svg>
+                </div>
+                <span class="predict-quickset-title">Cold and allergy set</span>
+                <span class="predict-quickset-sub">Sneezing, cough, chills</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Preserved Helper Text & Primary Button -->
+          <div class="predict-form-bottom-row">
+            <p id="helper-text" class="predict-helper-text">Pick quick examples or select symptoms from the library below. The latest result will open on the results page.</p>
+            <button type="submit" class="predict-btn-primary" id="btn-submit-predict">
+              <span>Analyze Symptoms</span>
+              <span class="arrow-icon">→</span>
+            </button>
           </div>
         </form>
-
-        <div class="example-row">
-          <button class="chip" data-example="itching, skin rash, nodal skin eruptions">Skin irritation set</button>
-          <button class="chip" data-example="headache, nausea, fatigue">General discomfort set</button>
-          <button class="chip" data-example="continuous sneezing, cough, chills">Cold and allergy set</button>
-        </div>
-
-        <div class="catalog">
-          <div class="catalog-header">
-            <div>
-              <p class="section-kicker">Library</p>
-              <h3>Dataset symptom library</h3>
-            </div>
-            <input id="symptom-search" type="search" placeholder="Search symptoms">
-          </div>
-          <div id="symptom-list" class="symptom-list"></div>
-        </div>
       </section>
-    </main>
-  </div>
 
+      <!-- 5. RIGHT-SIDE AI ASSISTANT CARD -->
+      <aside class="predict-card predict-ai-card">
+        <div class="predict-ai-header">
+          <div class="predict-ai-header-left">
+            <div class="predict-ai-icon-bubble">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a8 8 0 0 0-8 8c0 3.5 2 6.5 5 7.7V20a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2.3c3-1.2 5-4.2 5-7.7a8 8 0 0 0-8-8z"></path></svg>
+            </div>
+            <div>
+              <h3 class="predict-ai-title">AI Analysis</h3>
+              <span style="font-size: 0.76rem; color: var(--text-muted);">Neural Pattern Evaluator</span>
+            </div>
+          </div>
+          <span class="predict-ai-status-badge" id="ai-card-status">Waiting for input</span>
+        </div>
+
+        <!-- State 1: Idle (when textarea is empty) -->
+        <div class="predict-ai-idle-box" id="ai-idle-view">
+          <div class="predict-ai-orb-graphic">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+          </div>
+          <h4 class="predict-ai-idle-title">Ready to analyze</h4>
+          <p class="predict-ai-idle-desc">Enter at least one symptom to begin your analysis.</p>
+
+          <div class="predict-ai-steps-checklist">
+            <div class="predict-ai-step-item" id="step-symptom-matching">
+              <span class="predict-ai-step-dot"></span>
+              <span>Symptom matching</span>
+            </div>
+            <div class="predict-ai-step-item" id="step-pattern-analysis">
+              <span class="predict-ai-step-dot"></span>
+              <span>Pattern analysis</span>
+            </div>
+            <div class="predict-ai-step-item" id="step-result-generation">
+              <span class="predict-ai-step-dot"></span>
+              <span>Result generation</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- State 2: Active (when symptoms are entered) -->
+        <div class="predict-ai-active-box" id="ai-active-view">
+          <div class="predict-ai-active-header">
+            <span class="predict-ai-active-label">Symptoms added</span>
+            <span class="predict-ai-count-tag" id="ai-symptom-badge">0 symptoms</span>
+          </div>
+
+          <div class="predict-ai-chips-preview" id="ai-chips-container">
+            <!-- Dynamically populated selected chips -->
+          </div>
+
+          <div class="predict-ai-ready-banner">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span>Ready for analysis</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 7. SELECTED SYMPTOMS BAR -->
+    <div class="predict-selected-bar" id="selected-symptoms-bar">
+      <div class="predict-selected-header">
+        <div class="predict-selected-title">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+          <span>SELECTED SYMPTOMS</span>
+          <span class="predict-selected-count-badge" id="selected-count-badge">0 selected</span>
+        </div>
+        <button type="button" class="predict-btn-clear-all" id="btn-clear-all-chips" style="display: none;">Clear all</button>
+      </div>
+      <div class="predict-selected-pills-wrap" id="selected-pills-container">
+        <span class="predict-selected-empty" id="selected-empty-text">No symptoms selected yet</span>
+      </div>
+    </div>
+
+    <!-- 6. SYMPTOM LIBRARY -->
+    <section class="predict-library-card">
+      <div class="predict-library-header">
+        <div class="predict-library-title-wrap">
+          <h3>Symptom Library</h3>
+          <p>Select symptoms from the available dataset.</p>
+        </div>
+
+        <!-- Search Field -->
+        <div class="predict-search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input id="symptom-search" class="predict-search-input" type="search" placeholder="Search symptoms...">
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="predict-category-tabs-bar" id="category-tabs">
+        <button type="button" class="predict-category-tab active" data-category="all">All</button>
+        <button type="button" class="predict-category-tab" data-category="common">Common</button>
+        <button type="button" class="predict-category-tab" data-category="general">General</button>
+        <button type="button" class="predict-category-tab" data-category="skin">Skin</button>
+        <button type="button" class="predict-category-tab" data-category="respiratory">Respiratory</button>
+        <button type="button" class="predict-category-tab" data-category="digestive">Digestive</button>
+      </div>
+
+      <!-- Scrollable Container with Dedicated Scroll Bar -->
+      <div class="symptom-scroll-box">
+        <div class="symptom-scroll-hint">
+          <span>Scroll to view all symptoms • Click to select or deselect</span>
+          <span id="lib-visible-count" style="font-weight: 600; color: var(--accent-blue);">131 symptoms</span>
+        </div>
+
+        <!-- Preserved symptom-list container where app.js renders symptoms -->
+        <div id="symptom-list" class="symptom-list"></div>
+      </div>
+    </section>
+
+    <!-- 8. ANALYSIS ACTION AREA -->
+    <div class="predict-bottom-action-banner">
+      <div class="predict-action-info">
+        <h4>Ready to analyze?</h4>
+        <p>Review your symptoms before starting the prediction.</p>
+      </div>
+      <button type="button" class="predict-btn-bottom-analyze" id="btn-bottom-analyze" disabled>
+        <span>Analyze Symptoms</span>
+        <span class="arrow-icon">→</span>
+      </button>
+    </div>
+
+    <!-- 9. MEDICAL DISCLAIMER -->
+    <section class="predict-disclaimer-card">
+      <div class="predict-disclaimer-icon-wrap" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+      </div>
+      <div class="predict-disclaimer-content">
+        <h4>Important medical information</h4>
+        <p>
+          MedRecSys provides AI-assisted informational insights and is not a substitute for professional medical diagnosis, treatment, or medical advice. If you have serious or worsening symptoms, seek appropriate medical care.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="predict-footer">
+    <div class="predict-container">
+      <div class="predict-footer-grid">
+        <div class="predict-footer-brand-col">
+          <a href="/" class="predict-navbar-brand">
+            <div class="predict-brand-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><path d="M12 2v20M2 12h20"></path><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>
+            </div>
+            <span class="predict-brand-text">Med<span>RecSys</span></span>
+          </a>
+          <p class="predict-footer-tagline">AI-assisted healthcare insights.</p>
+        </div>
+
+        <div class="predict-footer-links-col">
+          <span class="predict-footer-col-title">Navigation</span>
+          <a href="/" class="predict-footer-link">Home</a>
+          <a href="/predict" class="predict-footer-link">Predict</a>
+          <a href="/results" class="predict-footer-link">Results</a>
+        </div>
+
+        <div class="predict-footer-links-col">
+          <span class="predict-footer-col-title">Platform</span>
+          <a href="/#how-it-works" class="predict-footer-link">How It Works</a>
+          <a href="/developer" class="predict-footer-link">Developer</a>
+          <a href="/contact" class="predict-footer-link">Contact</a>
+        </div>
+      </div>
+
+      <div class="predict-footer-bottom">
+        <span>&copy; 2026 MedRecSys. All rights reserved.</span>
+        <p style="max-width: 500px; font-size: 0.82rem; line-height: 1.5;">
+          Informational tool only. Consult a physician for all medical diagnoses and treatments.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Existing Application Script -->
   <script src="/app.js"></script>
+
+  <!-- Predict Page Controller Script -->
+  <script>
+    (function () {
+      const textarea = document.getElementById('symptoms');
+      const form = document.getElementById('prediction-form');
+      const countLabel = document.getElementById('symptoms-count');
+      const clearBtn = document.getElementById('btn-clear-textarea');
+      const clearAllBtn = document.getElementById('btn-clear-all-chips');
+      const selectedPillsWrap = document.getElementById('selected-pills-container');
+      const selectedEmptyText = document.getElementById('selected-empty-text');
+      const selectedCountBadge = document.getElementById('selected-count-badge');
+      const bottomAnalyzeBtn = document.getElementById('btn-bottom-analyze');
+      const aiIdleView = document.getElementById('ai-idle-view');
+      const aiActiveView = document.getElementById('ai-active-view');
+      const aiChipsContainer = document.getElementById('ai-chips-container');
+      const aiSymptomBadge = document.getElementById('ai-symptom-badge');
+      const aiCardStatus = document.getElementById('ai-card-status');
+      const symptomList = document.getElementById('symptom-list');
+      const symptomSearch = document.getElementById('symptom-search');
+      const categoryTabs = document.querySelectorAll('.predict-category-tab');
+      const libVisibleCount = document.getElementById('lib-visible-count');
+      const mobileToggle = document.getElementById('mobile-menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      let currentCategory = 'all';
+
+      // Category filter keywords mapped to dataset terms
+      const CATEGORIES = {
+        all: null,
+        common: ['headache', 'fatigue', 'cough', 'fever', 'nausea', 'vomiting', 'joint pain', 'muscle weakness', 'breathlessness', 'dizziness', 'chest pain', 'back pain', 'loss of appetite', 'abdominal pain', 'chills', 'sweating'],
+        skin: ['itching', 'skin rash', 'nodal skin eruptions', 'yellow skin', 'internal itching', 'skin peeling', 'silver like dusting', 'small dents in nails', 'inflammatory nails', 'blister', 'red sore around nose', 'yellow crust ooze', 'bruising', 'pus filled pimples', 'blackheads', 'scurring'],
+        respiratory: ['cough', 'continuous sneezing', 'breathlessness', 'phlegm', 'throat irritation', 'redness of eyes', 'sinus pressure', 'runny nose', 'congestion', 'chest pain', 'fast heart rate', 'blood in sputum', 'rusty sputum', 'mucoid sputum'],
+        digestive: ['acidity', 'ulcers on tongue', 'vomiting', 'indigestion', 'abdominal pain', 'constipation', 'stomach pain', 'diarrhoea', 'loss of appetite', 'nausea', 'belly pain', 'bloody stool', 'irritation in anus', 'passed blood', 'stomach bleeding', 'distention of abdomen', 'pain during bowel movements'],
+        general: ['fatigue', 'weight gain', 'anxiety', 'cold hands and feets', 'mood swings', 'weight loss', 'restlessness', 'lethargy', 'irregular sugar level', 'high fever', 'sunken eyes', 'sweating', 'dehydration', 'malaise', 'dizziness', 'chills', 'weakness in limbs']
+      };
+
+      // Mobile Menu Toggle
+      if (mobileToggle && mobileMenu) {
+        mobileToggle.addEventListener('click', () => {
+          const isOpen = mobileMenu.classList.toggle('open');
+          mobileToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+      }
+
+      function getParsedSymptoms() {
+        if (!textarea) return [];
+        return textarea.value
+          .split(',')
+          .map(s => s.trim())
+          .filter(Boolean);
+      }
+
+      function setParsedSymptoms(items) {
+        if (!textarea) return;
+        textarea.value = items.join(', ');
+        syncUi();
+      }
+
+      function removeSymptom(name) {
+        const current = getParsedSymptoms();
+        const filtered = current.filter(s => s.toLowerCase() !== name.toLowerCase());
+        setParsedSymptoms(filtered);
+      }
+
+      function applyCategoryAndSearch() {
+        if (!symptomList) return;
+        const searchTerm = (symptomSearch?.value || '').trim().toLowerCase();
+        const allowedList = CATEGORIES[currentCategory];
+
+        let visibleCount = 0;
+        symptomList.querySelectorAll('.symptom-token').forEach(btn => {
+          const label = (btn.getAttribute('data-name') || btn.textContent.replace(/[✓×]/g, '')).trim().toLowerCase();
+          btn.setAttribute('data-name', label);
+
+          let matchesSearch = !searchTerm || label.includes(searchTerm);
+          let matchesCategory = !allowedList || allowedList.some(item => label.includes(item) || item.includes(label));
+
+          if (matchesSearch && matchesCategory) {
+            btn.style.display = 'inline-flex';
+            visibleCount++;
+          } else {
+            btn.style.display = 'none';
+          }
+        });
+
+        if (libVisibleCount) {
+          libVisibleCount.textContent = `${visibleCount} symptoms`;
+        }
+      }
+
+      // Category tab click listener
+      categoryTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          categoryTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentCategory = tab.getAttribute('data-category') || 'all';
+          applyCategoryAndSearch();
+        });
+      });
+
+      // Hook search input for category combining
+      if (symptomSearch) {
+        symptomSearch.addEventListener('input', () => {
+          setTimeout(applyCategoryAndSearch, 50);
+        });
+      }
+
+      function syncUi() {
+        const symptoms = getParsedSymptoms();
+        const count = symptoms.length;
+        const lowerSymptoms = symptoms.map(s => s.toLowerCase());
+
+        // Counter & clear button
+        if (countLabel) {
+          countLabel.textContent = `${count} symptom${count === 1 ? '' : 's'} entered`;
+        }
+        if (clearBtn) {
+          clearBtn.style.display = count > 0 ? 'inline-flex' : 'none';
+        }
+        if (clearAllBtn) {
+          clearAllBtn.style.display = count > 0 ? 'inline-block' : 'none';
+        }
+
+        // Bottom analyze button enable/disable
+        if (bottomAnalyzeBtn) {
+          bottomAnalyzeBtn.disabled = count === 0;
+        }
+
+        // Highlight selected tokens in library without jumping scroll position
+        if (symptomList) {
+          symptomList.querySelectorAll('.symptom-token').forEach(btn => {
+            const raw = btn.getAttribute('data-name') || btn.textContent.replace(/[✓×]/g, '').trim();
+            btn.setAttribute('data-name', raw);
+            const isSelected = lowerSymptoms.includes(raw.toLowerCase());
+            btn.classList.toggle('selected', isSelected);
+          });
+        }
+
+        // Selected Symptoms Bar
+        if (selectedCountBadge) {
+          selectedCountBadge.textContent = `${count} selected`;
+        }
+        if (selectedPillsWrap) {
+          selectedPillsWrap.innerHTML = '';
+          if (count === 0) {
+            selectedPillsWrap.appendChild(selectedEmptyText);
+          } else {
+            symptoms.forEach(sym => {
+              const pill = document.createElement('span');
+              pill.className = 'predict-selected-pill';
+              pill.innerHTML = `<span>${sym}</span><span class="predict-selected-pill-remove" title="Remove">&times;</span>`;
+              pill.querySelector('.predict-selected-pill-remove').addEventListener('click', () => {
+                removeSymptom(sym);
+              });
+              selectedPillsWrap.appendChild(pill);
+            });
+          }
+        }
+
+        // Right Side AI Assistant Card
+        if (aiIdleView && aiActiveView) {
+          if (count === 0) {
+            aiIdleView.style.display = 'flex';
+            aiActiveView.style.display = 'none';
+            if (aiCardStatus) aiCardStatus.textContent = 'Waiting for input';
+          } else {
+            aiIdleView.style.display = 'none';
+            aiActiveView.style.display = 'block';
+            if (aiCardStatus) aiCardStatus.textContent = 'Ready for analysis';
+            if (aiSymptomBadge) aiSymptomBadge.textContent = `${count} symptom${count === 1 ? '' : 's'}`;
+
+            if (aiChipsContainer) {
+              aiChipsContainer.innerHTML = '';
+              symptoms.forEach(sym => {
+                const chip = document.createElement('span');
+                chip.className = 'predict-ai-chip';
+                chip.innerHTML = `<span>${sym}</span><span class="chip-remove" title="Remove">&times;</span>`;
+                chip.querySelector('.chip-remove').addEventListener('click', () => {
+                  removeSymptom(sym);
+                });
+                aiChipsContainer.appendChild(chip);
+              });
+            }
+          }
+        }
+      }
+
+      // Seamless toggle when clicking tokens inside the scroll bar
+      if (symptomList) {
+        symptomList.addEventListener('click', (e) => {
+          const btn = e.target.closest('.symptom-token');
+          if (!btn) return;
+
+          e.preventDefault();
+          e.stopPropagation(); // Stop default append so toggle works cleanly
+
+          const rawName = btn.getAttribute('data-name') || btn.textContent.replace(/[✓×]/g, '').trim();
+          btn.setAttribute('data-name', rawName);
+
+          const currentSymptoms = getParsedSymptoms();
+          const lowerCurrent = currentSymptoms.map(s => s.toLowerCase());
+          const index = lowerCurrent.indexOf(rawName.toLowerCase());
+
+          if (index >= 0) {
+            // Already selected -> unselect it
+            currentSymptoms.splice(index, 1);
+          } else {
+            // Not selected -> select it
+            currentSymptoms.push(rawName);
+          }
+
+          setParsedSymptoms(currentSymptoms);
+        }, true); // Capture phase listener
+
+        // Observe when app.js populates symptoms
+        const observer = new MutationObserver(() => {
+          applyCategoryAndSearch();
+          syncUi();
+        });
+        observer.observe(symptomList, { childList: true });
+      }
+
+      // Textarea typing sync
+      if (textarea) {
+        textarea.addEventListener('input', syncUi);
+      }
+
+      // Clear buttons
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          setParsedSymptoms([]);
+          textarea.focus();
+        });
+      }
+      if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', () => {
+          setParsedSymptoms([]);
+          textarea.focus();
+        });
+      }
+
+      // Bottom analyze trigger
+      if (bottomAnalyzeBtn && form) {
+        bottomAnalyzeBtn.addEventListener('click', () => {
+          if (!bottomAnalyzeBtn.disabled) {
+            form.requestSubmit ? form.requestSubmit() : form.submit();
+          }
+        });
+      }
+
+      // Quick sets active toggle
+      document.querySelectorAll('[data-example]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-example]').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          setTimeout(syncUi, 60);
+        });
+      });
+
+      // Initial sync
+      setTimeout(() => {
+        applyCategoryAndSearch();
+        syncUi();
+      }, 250);
+    })();
+  </script>
+  <script src="/user-session.js" defer></script>
 </body>
 </html>
