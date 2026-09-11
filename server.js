@@ -176,7 +176,7 @@ function readJsonBody(request) {
   });
 }
 
-function serveStatic(response, filePath) {
+function serveStatic(request, response, filePath) {
   if (!filePath.startsWith(PUBLIC_DIR)) {
     safeJson(response, 403, { error: "Forbidden" });
     return;
@@ -191,7 +191,11 @@ function serveStatic(response, filePath) {
   response.writeHead(200, {
     "Content-Type": MIME_TYPES[ext] || "application/octet-stream"
   });
-  response.end(fs.readFileSync(filePath));
+  if (request.method === "HEAD") {
+    response.end();
+  } else {
+    response.end(fs.readFileSync(filePath));
+  }
 }
 
 function loadDataStore() {
@@ -610,16 +614,16 @@ const server = http.createServer((request, response) => {
     }
   }
 
-  if (request.method === "GET" && pageRoutes.has(url.pathname)) {
-    serveStatic(response, path.join(PUBLIC_DIR, pageRoutes.get(url.pathname)));
+  if ((request.method === "GET" || request.method === "HEAD") && pageRoutes.has(url.pathname)) {
+    serveStatic(request, response, path.join(PUBLIC_DIR, pageRoutes.get(url.pathname)));
     return;
   }
 
-  if (request.method === "GET") {
+  if (request.method === "GET" || request.method === "HEAD") {
     const requestedPath = path.normalize(
       path.join(PUBLIC_DIR, decodeURIComponent(url.pathname))
     );
-    serveStatic(response, requestedPath);
+    serveStatic(request, response, requestedPath);
     return;
   }
 
